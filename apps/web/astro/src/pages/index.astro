@@ -99,6 +99,20 @@ const faqJsonLd = {
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     
+    <!-- Load saved theme from localStorage before page render (prevents FOUC) -->
+    <script is:inline>
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'light' || savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+          }
+        } catch (e) {
+          // Silently fail if localStorage is unavailable
+        }
+      })();
+    </script>
+    
     <title>{brand.seo.title}</title>
     <meta name="description" content={brand.seo.description} />
     <meta name="keywords" content={brand.seo.keywords.join(', ')} />
