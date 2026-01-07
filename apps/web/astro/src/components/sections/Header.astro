@@ -70,6 +70,16 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
       <!-- Menu items -->
       <nav class="flex-1 overflow-y-auto min-h-0 px-4 py-4">
         <ul class="space-y-0.5">
+          <!-- Home link -->
+          <li>
+            <a
+              href="/"
+              class="block text-3xl font-medium text-base-content/70 hover:text-base-content py-4 px-5 rounded-xl hover:bg-base-content/10 transition-colors w-full"
+            >
+              Home
+            </a>
+          </li>
+          
           {brand.navigation.items.map((item) => (
             <li>
               <a
