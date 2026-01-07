@@ -9,7 +9,7 @@ import { brand } from '../../config/brand'
   <!-- Cards layout - integrated with design -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
     {brand.socialProof.map((proof) => (
-      <div class="p-6 rounded-xl bg-white/40 dark:bg-base-content/10 backdrop-blur-sm hover:bg-white/50 dark:hover:bg-base-content/15 transition-all shadow-xl hover:shadow-2xl">
+      <div class="p-6 rounded-xl card-block backdrop-blur-sm transition-all shadow-xl hover:shadow-2xl">
         <p class="text-base sm:text-lg text-base-content font-medium">
           <span class="font-bold text-base-content block mb-2">{proof.title}.</span>
           <span class="text-base-content/70">{proof.description}</span>
