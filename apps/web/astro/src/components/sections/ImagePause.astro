@@ -1,0 +1,27 @@
+---
+interface Props {
+  src: string
+  alt?: string
+  type?: 'product' | 'abstract' | 'ambient'
+}
+
+const { src, alt = '', type = 'ambient' } = Astro.props
+---
+
+<!-- Image pause: Visual breathing space between blocks -->
+<!-- Purpose: context, not decoration. Adds depth without noise. -->
+<!-- MANDATORY after Hero to avoid "documentation" look -->
+{src && (
+  <div class="w-full py-16 sm:py-24">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      <img
+        src={src}
+        alt={alt}
+        class={`w-full h-auto rounded-2xl ${
+          type === 'ambient' ? 'opacity-40' : type === 'abstract' ? 'opacity-70' : 'opacity-90'
+        }`}
+        loading="lazy"
+      />
+    </div>
+  </div>
+)}

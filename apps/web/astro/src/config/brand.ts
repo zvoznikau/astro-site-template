@@ -207,4 +207,40 @@ export const brand = {
       ],
     },
   },
+
+  // Images configuration
+  // Purpose: context, not decoration. Images add depth and emotion.
+  // See .cursor/rules/images.md for detailed rules
+  images: {
+    // Hero image: Product screenshot or abstract tech visual
+    hero: {
+      src: '/images/hero-app-screenshot.png', // App screenshot showing dashboard
+      alt: 'DemoAPPmax server monitoring dashboard - CPU, RAM, Disk, and Network monitoring',
+      type: 'product', // 'product' | 'abstract' | 'ambient'
+    },
+    // Visual pauses between blocks (breathing space)
+    // MANDATORY: pause after Hero to avoid "documentation" look
+    pauses: [
+      {
+        after: 'Hero', // MANDATORY: Insert after Hero
+        src: '', // e.g., './images/pause-1.png' or 'https://images.unsplash.com/...'
+        alt: '',
+        type: 'ambient', // 'product' | 'abstract' | 'ambient'
+      },
+      {
+        after: 'Features',
+        src: '',
+        alt: '',
+        type: 'abstract',
+      },
+    ],
+    // Supporting images for Features / How it works (1-2 max, very calm)
+    supporting: {
+      features: {
+        src: '',
+        alt: '',
+        type: 'abstract',
+      },
+    },
+  },
 }

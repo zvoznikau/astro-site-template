@@ -3,19 +3,19 @@ import { brand } from '../../config/brand'
 import ThemeToggle from '../ui/ThemeToggle.astro'
 ---
 
-<header class="sticky top-0 z-50 bg-base-100/50 backdrop-blur-sm">
-  <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+<header class="sticky top-0 z-50 bg-transparent backdrop-blur-md border-b border-white/10">
+  <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
     <div class="flex items-center justify-between">
-      <a href="/" class="text-lg font-medium text-base-content hover:text-primary transition-colors">
+      <a href="/" class="text-xl font-bold text-white hover:opacity-80 transition-opacity">
         {brand.name}
       </a>
-      <div class="flex items-center gap-6">
+      <div class="flex items-center gap-8">
         <!-- Desktop menu -->
-        <div class="hidden md:flex items-center gap-6">
+        <div class="hidden md:flex items-center gap-8">
           {brand.navigation.items.slice(0, 3).map((item) => (
             <a
               href={item.href}
-              class="text-sm text-base-content/70 hover:text-primary transition-colors"
+              class="text-sm font-medium text-white/70 hover:text-white transition-colors"
             >
               {item.label}
             </a>
@@ -27,7 +27,7 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
           <div tabindex="0" role="button" class="text-base-content/70">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
+              class="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -42,11 +42,11 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
           </div>
           <ul
             tabindex="0"
-            class="menu menu-sm dropdown-content mt-2 z-[1] p-2 bg-base-100 rounded-lg w-40 border border-base-300"
+            class="menu menu-sm dropdown-content mt-2 z-[1] p-2 bg-slate-900/95 backdrop-blur-md rounded-lg w-48 shadow-lg border border-white/10"
           >
             {brand.navigation.items.map((item) => (
               <li>
-                <a href={item.href} class="text-sm">
+                <a href={item.href} class="text-sm font-medium">
                   {item.label}
                 </a>
               </li>
@@ -57,7 +57,7 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
         <ThemeToggle />
         <a
           href={brand.urls.appStore}
-          class="text-sm font-medium text-primary hover:opacity-80 transition-opacity"
+          class="px-4 py-2 text-sm font-semibold text-white rounded-lg gradient-bg hover:opacity-90 transition-opacity shadow-md"
           target="_blank"
           rel="noopener noreferrer"
         >

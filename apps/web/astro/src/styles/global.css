@@ -1,36 +1,130 @@
 @import 'tailwindcss';
 
-/* Modern 2025-2026 Design System */
-:root {
+/* Astro.build inspired design system */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root,
+[data-theme='light'] {
   /* Smooth scrolling */
   scroll-behavior: smooth;
   
   /* Better font rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* Astro.build color variables */
+  --astro-purple: #7c3aed;
+  --astro-blue: #3b82f6;
+  --astro-indigo: #6366f1;
 }
 
-/* Glassmorphism utility classes */
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+/* DaisyUI theme variables for light theme (Astro.build style) */
+[data-theme='light'] {
+  --p: 262 83% 58%; /* Purple #7c3aed */
+  --pc: 0 0% 100%;
+  
+  --s: 215 16% 47%; /* Gray #6b7280 */
+  --sc: 0 0% 100%;
+  
+  --a: 217 91% 60%; /* Blue #3b82f6 */
+  --ac: 0 0% 100%;
+  
+  --n: 215 28% 17%; /* Dark gray #1f2937 */
+  --nc: 0 0% 100%;
+  
+  /* Pure white like astro.build */
+  --b1: 0 0% 100%; /* #ffffff */
+  --b2: 210 20% 98%; /* #f9fafb */
+  --b3: 210 20% 96%; /* #f3f4f6 */
+  
+  /* Almost black text */
+  --bc: 0 0% 4%; /* #0a0a0a */
+  
+  --in: 217 91% 60%;
+  --su: 142 76% 36%;
+  --wa: 38 92% 50%;
+  --er: 0 84% 60%;
 }
 
-.glass-dark {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* DaisyUI theme variables for dark theme */
+[data-theme='dark'] {
+  --p: 262 80% 80%; /* Lighter purple */
+  --pc: 0 0% 4%;
+  
+  --s: 215 20% 65%; /* Lighter gray */
+  --sc: 0 0% 4%;
+  
+  --a: 217 91% 70%; /* Lighter blue */
+  --ac: 0 0% 4%;
+  
+  --n: 0 0% 90%;
+  --nc: 0 0% 4%;
+  
+  /* Dark background */
+  --b1: 0 0% 4%; /* #0a0a0a */
+  --b2: 0 0% 10%; /* #1a1a1a */
+  --b3: 0 0% 16%; /* #2a2a2a */
+  
+  /* Almost white text */
+  --bc: 0 0% 98%; /* #fafafa */
+  
+  --in: 217 91% 70%;
+  --su: 142 76% 50%;
+  --wa: 38 92% 60%;
+  --er: 0 84% 70%;
 }
 
-/* Smooth transitions for all interactive elements */
+/* Astro.build gradient utilities */
+.gradient-text {
+  background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme='dark'] .gradient-text {
+  background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+}
+
+[data-theme='dark'] .gradient-bg {
+  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+}
+
+/* Smooth transitions */
 * {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Modern gradient text animation */
+/* Card shadows like astro.build */
+.card-shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.card-shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Background patterns and gradients like astro.build */
+.bg-gradient-hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #581c87 50%, #1e1b4b 75%, #0f172a 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+[data-theme='dark'] .bg-gradient-hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #581c87 50%, #1e1b4b 75%, #0f172a 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
 @keyframes gradient-shift {
   0%, 100% {
     background-position: 0% 50%;
@@ -40,21 +134,36 @@
   }
 }
 
-.gradient-animated {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
+.bg-gradient-section {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
 }
 
-/* Floating animation for decorative elements */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+[data-theme='dark'] .bg-gradient-section {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 50%, #1a1a1a 100%);
 }
 
-.float {
-  animation: float 6s ease-in-out infinite;
+.bg-gradient-features {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.03) 0%, rgba(59, 130, 246, 0.03) 100%);
+}
+
+[data-theme='dark'] .bg-gradient-features {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%);
+}
+
+.bg-gradient-pricing {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+}
+
+[data-theme='dark'] .bg-gradient-pricing {
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+.bg-pattern-dots {
+  background-image: radial-gradient(circle, rgba(124, 58, 237, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0;
+}
+
+[data-theme='dark'] .bg-pattern-dots {
+  background-image: radial-gradient(circle, rgba(167, 139, 250, 0.15) 1px, transparent 1px);
 }

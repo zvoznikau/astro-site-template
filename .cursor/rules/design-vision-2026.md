@@ -2,6 +2,11 @@
 
 **Reference**: cursor.com + gitkraken.com
 
+**Related documents**: 
+- See `.cursor/rules/images.md` for image and visual context rules
+- See `.cursor/rules/layout-composition.md` for layout composition rules (ASCII schemas)
+- See `.cursor/rules/colors.md` for color system rules
+
 ## Status
 - **Type**: Mandatory update
 - **Priority**: High

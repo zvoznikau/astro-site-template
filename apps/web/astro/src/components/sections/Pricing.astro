@@ -4,50 +4,65 @@ import { brand } from '../../config/brand'
 
 <section
   id="pricing"
-  class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+  class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32"
 >
-  <div class="space-y-12">
-    <div>
-      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
-        Pricing
+  <div class="space-y-20">
+    <div class="text-center">
+      <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+        <span class="gradient-text">Pricing</span>
       </h2>
+      <p class="text-xl text-white/80 max-w-2xl mx-auto">
+        Choose the plan that works for you.
+      </p>
     </div>
-    <div class="space-y-8">
+    
+    <!-- Two columns: Monthly | Yearly -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
       <!-- Monthly Plan -->
-      <div>
-        <div class="flex items-baseline justify-between mb-2">
-          <h3 class="text-2xl font-semibold">Monthly</h3>
-          <div class="text-3xl font-bold">{brand.pricing.monthly.price}</div>
+      <div class="p-8 rounded-2xl bg-white/10 backdrop-blur-md border-2 border-white/30 card-shadow hover:border-white/50 transition-all shadow-xl">
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-2xl font-bold text-white mb-2">Monthly</h3>
+            <div class="flex items-baseline gap-2">
+              <span class="text-5xl font-bold text-white">{brand.pricing.monthly.price}</span>
+              <span class="text-lg text-white/60">/month</span>
+            </div>
+          </div>
+          <p class="text-base text-white/70">Perfect for trying out DemoAPPmax.</p>
+          <a
+            href={brand.urls.appStore}
+            class="inline-flex items-center justify-center w-full px-6 py-3 text-base font-semibold text-white border-2 border-white/40 rounded-lg hover:border-white/60 hover:bg-white/10 transition-all shadow-md"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {brand.cta.subscribe}
+          </a>
         </div>
-        <p class="text-base-content/70 mb-4">Per {brand.pricing.monthly.period}</p>
-        <a
-          href={brand.urls.appStore}
-          class="text-sm font-medium text-primary hover:opacity-80 transition-opacity"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {brand.cta.subscribe} →
-        </a>
       </div>
 
-      <!-- Yearly Plan -->
-      <div>
-        <div class="flex items-baseline justify-between mb-2">
-          <div class="flex items-center gap-2">
-            <h3 class="text-2xl font-semibold">Yearly</h3>
-            <span class="text-xs font-medium text-base-content/60">Best value</span>
-          </div>
-          <div class="text-3xl font-bold">{brand.pricing.yearly.price}</div>
+      <!-- Yearly Plan (highlighted) -->
+      <div class="p-8 rounded-2xl gradient-bg text-white card-shadow-lg relative overflow-hidden border-2 border-white/20">
+        <div class="absolute top-4 right-4">
+          <span class="px-3 py-1 text-xs font-bold bg-white/20 rounded-full backdrop-blur-sm">Best value</span>
         </div>
-        <p class="text-base-content/70 mb-4">Per {brand.pricing.yearly.period}</p>
-        <a
-          href={brand.urls.appStore}
-          class="text-sm font-medium text-primary hover:opacity-80 transition-opacity"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {brand.cta.subscribe} →
-        </a>
+        <div class="space-y-6 relative z-10">
+          <div>
+            <h3 class="text-2xl font-bold mb-2">Yearly</h3>
+            <div class="flex items-baseline gap-2">
+              <span class="text-5xl font-bold">{brand.pricing.yearly.price}</span>
+              <span class="text-lg opacity-90">/year</span>
+            </div>
+          </div>
+          <p class="text-base opacity-90">Save money with annual billing.</p>
+          <a
+            href={brand.urls.appStore}
+            class="inline-flex items-center justify-center w-full px-6 py-3 text-base font-semibold bg-white text-purple-600 rounded-lg hover:bg-white/90 transition-all shadow-lg hover:shadow-xl font-bold"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {brand.cta.subscribe}
+          </a>
+        </div>
       </div>
     </div>
   </div>

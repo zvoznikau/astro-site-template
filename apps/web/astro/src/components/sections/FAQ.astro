@@ -4,21 +4,60 @@ import { brand } from '../../config/brand'
 
 <section
   id="faq"
-  class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+  class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32"
 >
-  <div class="space-y-12">
-    <div>
-      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
-        FAQ
+  <div class="space-y-16">
+    <div class="text-center">
+      <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+        <span class="gradient-text">FAQ</span>
       </h2>
+      <p class="text-xl text-white/80 max-w-2xl mx-auto">
+        Common questions about DemoAPPmax.
+      </p>
     </div>
-    <div class="space-y-8">
-      {brand.faq.map((item) => (
-        <div>
-          <h3 class="text-lg font-semibold mb-2">{item.question}</h3>
-          <p class="text-base-content/70">{item.answer}</p>
-        </div>
-      ))}
+    <div class="max-w-3xl mx-auto">
+      <div class="space-y-4">
+        {brand.faq.map((item, index) => (
+          <div class="faq-item border border-white/30 rounded-xl overflow-hidden bg-white/10 backdrop-blur-md card-shadow shadow-xl">
+            <input
+              type="radio"
+              name="faq-accordion"
+              id={`faq-${index}`}
+              class="faq-radio hidden"
+              checked={index === 0}
+            />
+            <label
+              for={`faq-${index}`}
+              class="flex items-center justify-between w-full px-6 py-5 cursor-pointer hover:bg-white/10 transition-colors"
+            >
+              <span class="text-lg font-semibold text-white pr-4">{item.question}</span>
+              <svg
+                class="faq-arrow w-5 h-5 text-white/70 transition-transform duration-300 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </label>
+            <div class={`faq-content overflow-hidden transition-all duration-300 ease-in-out ${index === 0 ? 'max-h-[1000px]' : 'max-h-0'}`}>
+              <div class="px-6 pb-5">
+                <p class="text-base text-white/70 leading-relaxed">{item.answer}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* Show content when radio is checked */
+  .faq-radio:checked + label + .faq-content {
+    max-height: 1000px !important;
+  }
+  .faq-radio:checked + label .faq-arrow {
+    transform: rotate(180deg);
+  }
+</style>

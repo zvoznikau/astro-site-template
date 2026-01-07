@@ -12,6 +12,7 @@ import Pricing from '../components/sections/Pricing.astro'
 import FAQ from '../components/sections/FAQ.astro'
 import CTABand from '../components/sections/CTABand.astro'
 import Footer from '../components/sections/Footer.astro'
+import ImagePause from '../components/sections/ImagePause.astro'
 
 // Block component mapping
 const blockMap = {
@@ -24,10 +25,30 @@ const blockMap = {
   FAQ,
   CTABand,
   Footer,
+  ImagePause,
 }
 
 // Get block order from config
 const blockOrder = brand.pages.index.blocks
+
+// Build blocks with image pauses
+const blocksWithPauses: Array<{ type: string; name?: string; props?: any }> = []
+blockOrder.forEach((blockName, index) => {
+  blocksWithPauses.push({ type: 'block', name: blockName })
+  
+  // Check if there's an image pause after this block
+  const pause = brand.images?.pauses?.find((p) => p.after === blockName && p.src)
+  if (pause) {
+    blocksWithPauses.push({
+      type: 'image',
+      props: {
+        src: pause.src,
+        alt: pause.alt,
+        type: pause.type,
+      },
+    })
+  }
+})
 
 // Generate JSON-LD for SEO
 const websiteJsonLd = {
@@ -113,13 +134,17 @@ const faqJsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   </head>
 
-  <body class="min-h-screen bg-base-100 text-base-content">
+  <body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white antialiased">
     <main>
       {
-        blockOrder.map((blockName) => {
-          const BlockComponent = blockMap[blockName]
-          if (BlockComponent) {
-            return <BlockComponent />
+        blocksWithPauses.map((item) => {
+          if (item.type === 'block' && item.name) {
+            const BlockComponent = blockMap[item.name]
+            if (BlockComponent) {
+              return <BlockComponent />
+            }
+          } else if (item.type === 'image' && item.props) {
+            return <ImagePause {...item.props} />
           }
           return null
         })

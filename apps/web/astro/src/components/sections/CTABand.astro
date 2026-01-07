@@ -2,18 +2,31 @@
 import { brand } from '../../config/brand'
 ---
 
-<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-  <div class="text-center space-y-6">
-    <p class="text-lg text-base-content/70">
-      Start monitoring your servers today and catch issues before they affect your users.
+<!-- CTA Band: Astro.build style -->
+<section class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 overflow-hidden">
+  <!-- Background gradient -->
+  <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 pointer-events-none"></div>
+  <div class="relative z-10">
+  <div class="max-w-3xl mx-auto text-center space-y-8">
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+      Start monitoring your servers today
+    </h2>
+    <p class="text-xl text-white/80">
+      Catch issues before they affect your users.
     </p>
-    <a
-      href={brand.urls.appStore}
-      class="inline-block text-base font-medium text-primary hover:opacity-80 transition-opacity"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {brand.cta.primary} →
-    </a>
+    <div class="pt-4">
+      <a
+        href={brand.urls.appStore}
+        class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white rounded-lg gradient-bg hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {brand.cta.primary}
+        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+  </div>
   </div>
 </section>
