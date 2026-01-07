@@ -18,7 +18,7 @@ import { brand } from '../../config/brand'
     <div class="max-w-3xl mx-auto">
       <div class="space-y-4" id="faq-container">
         {brand.faq.map((item, index) => (
-          <div class="faq-item rounded-xl overflow-hidden bg-white/60 dark:bg-base-content/10 backdrop-blur-md card-shadow shadow-xl" data-faq-index={index}>
+          <div class="faq-item rounded-xl overflow-hidden bg-white/60 dark:bg-base-content/10 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all" data-faq-index={index}>
             <button
               type="button"
               class="faq-button flex items-center justify-between w-full px-6 py-5 cursor-pointer hover:bg-base-content/10 transition-colors text-left"
