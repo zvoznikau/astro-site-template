@@ -34,12 +34,75 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
     <!-- IMG ZONE -->
     {brand.images?.hero && brand.images.hero.src ? (
       <div class="mt-12 lg:mt-0">
-        <img
-          src={brand.images.hero.src}
-          alt={brand.images.hero.alt || ''}
-          class="w-full h-auto rounded-3xl"
-          loading="eager"
-        />
+        <div class="relative p-4 sm:p-6 lg:p-8">
+          <!-- Carousel container -->
+          <div class="carousel-container relative overflow-hidden rounded-3xl">
+            <div class="carousel-track flex transition-transform duration-500 ease-in-out" id="carousel-track">
+              <!-- Clone of last slide (for infinite loop) -->
+              <div class="carousel-slide carousel-clone min-w-full flex-shrink-0 p-2">
+                <img
+                  src={brand.images.hero.src}
+                  alt={`${brand.images.hero.alt || ''} - Clone`}
+                  class="w-full h-auto rounded-3xl max-w-full max-h-[500px] sm:max-h-[600px] lg:max-h-[700px] object-contain"
+                  loading="lazy"
+                />
+              </div>
+              <!-- 5 identical images -->
+              {Array.from({ length: 5 }).map((_, index) => (
+                <div class="carousel-slide min-w-full flex-shrink-0 p-2">
+                  <img
+                    src={brand.images.hero.src}
+                    alt={`${brand.images.hero.alt || ''} - Slide ${index + 1}`}
+                    class="w-full h-auto rounded-3xl max-w-full max-h-[500px] sm:max-h-[600px] lg:max-h-[700px] object-contain"
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
+                </div>
+              ))}
+              <!-- Clone of first slide (for infinite loop) -->
+              <div class="carousel-slide carousel-clone min-w-full flex-shrink-0 p-2">
+                <img
+                  src={brand.images.hero.src}
+                  alt={`${brand.images.hero.alt || ''} - Clone`}
+                  class="w-full h-auto rounded-3xl max-w-full max-h-[500px] sm:max-h-[600px] lg:max-h-[700px] object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            
+            <!-- Navigation arrows -->
+            <button
+              class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 bg-base-100/80 hover:bg-base-100 rounded-full p-2 shadow-lg transition-all z-10"
+              aria-label="Previous slide"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 bg-base-100/80 hover:bg-base-100 rounded-full p-2 shadow-lg transition-all z-10"
+              aria-label="Next slide"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            
+            <!-- Dots indicator -->
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <button
+                  class={`carousel-dot w-2 h-2 rounded-full transition-all ${
+                    index === 0 
+                      ? 'bg-gray-900 dark:bg-white' 
+                      : 'bg-gray-900/40 dark:bg-white/40'
+                  }`}
+                  data-slide={index}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     ) : (
       <!-- Placeholder -->
@@ -50,3 +113,160 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
   </div>
   </div>
 </section>
+
+<script>
+  // Carousel functionality with infinite loop and auto-play
+  (function initCarousel() {
+    const track = document.getElementById('carousel-track');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const container = document.querySelector('.carousel-container');
+    
+    if (!track || !prevBtn || !nextBtn || dots.length === 0 || !container) return;
+    
+    const totalSlides = 5;
+    // Start at position 1 (first real slide, after clone)
+    let currentSlide = 1;
+    let autoPlayInterval = null;
+    const autoPlayDelay = 3000; // 3 seconds
+    let isTransitioning = false;
+    
+    // Update carousel position
+    function updateCarousel(skipTransition = false) {
+      if (skipTransition) {
+        track.style.transition = 'none';
+      } else {
+        track.style.transition = 'transform 0.5s ease-in-out';
+      }
+      
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      
+      // Force reflow to apply transition
+      if (skipTransition) {
+        void track.offsetWidth;
+        track.style.transition = 'transform 0.5s ease-in-out';
+      }
+      
+      // Update dots (map to real slide index)
+      const realSlideIndex = currentSlide === 0 ? totalSlides - 1 : 
+                            currentSlide > totalSlides ? 0 : 
+                            currentSlide - 1;
+      
+      dots.forEach((dot, index) => {
+        if (index === realSlideIndex) {
+          dot.classList.remove('bg-gray-900/40', 'dark:bg-white/40');
+          dot.classList.add('bg-gray-900', 'dark:bg-white');
+        } else {
+          dot.classList.remove('bg-gray-900', 'dark:bg-white');
+          dot.classList.add('bg-gray-900/40', 'dark:bg-white/40');
+        }
+      });
+    }
+    
+    // Go to specific slide
+    function goToSlide(slideIndex) {
+      currentSlide = slideIndex + 1; // +1 because first slide is clone
+      updateCarousel();
+      resetAutoPlay();
+    }
+    
+    // Next slide (infinite loop)
+    function nextSlide() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      
+      currentSlide++;
+      
+      // If we reached the clone of first slide, animate to it, then jump to real first slide
+      if (currentSlide > totalSlides) {
+        // Animate to clone with transition
+        updateCarousel(false);
+        // After animation completes, jump to real first slide without transition
+        setTimeout(() => {
+          currentSlide = 1;
+          updateCarousel(true);
+          isTransitioning = false;
+        }, 500);
+      } else {
+        updateCarousel();
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 500);
+      }
+    }
+    
+    // Previous slide (infinite loop)
+    function prevSlide() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      
+      currentSlide--;
+      
+      // If we reached the clone of last slide, animate to it, then jump to real last slide
+      if (currentSlide < 1) {
+        // Animate to clone with transition
+        updateCarousel(false);
+        // After animation completes, jump to real last slide without transition
+        setTimeout(() => {
+          currentSlide = totalSlides;
+          updateCarousel(true);
+          isTransitioning = false;
+        }, 500);
+      } else {
+        updateCarousel();
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 500);
+      }
+    }
+    
+    // Start auto-play
+    function startAutoPlay() {
+      if (autoPlayInterval) return;
+      autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+    }
+    
+    // Stop auto-play
+    function stopAutoPlay() {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
+    }
+    
+    // Reset auto-play (restart timer)
+    function resetAutoPlay() {
+      stopAutoPlay();
+      startAutoPlay();
+    }
+    
+    // Event listeners
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      resetAutoPlay();
+    });
+    
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      resetAutoPlay();
+    });
+    
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        resetAutoPlay();
+      });
+    });
+    
+    // Pause on hover, resume on leave
+    container.addEventListener('mouseenter', stopAutoPlay);
+    container.addEventListener('mouseleave', startAutoPlay);
+    
+    // Initialize position
+    updateCarousel(true);
+    
+    // Start auto-play on load
+    startAutoPlay();
+  })();
+</script>
