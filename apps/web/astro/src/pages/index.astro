@@ -1,20 +1,40 @@
 ---
-import "../styles/global.css";
+import '../styles/global.css'
+import { brand } from '../config/brand'
+import ThemeToggle from '../components/ui/ThemeToggle.astro'
 ---
 
----
+<html lang="en" data-theme={brand.theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{brand.name}</title>
+  </head>
 
----
+  <body class="min-h-screen bg-base-100 text-base-content">
+    <main class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+      <nav class="navbar bg-base-100 px-0">
+        <div class="flex-1">
+          <span class="text-xl font-semibold">{brand.name}</span>
+        </div>
+        <div class="flex-none gap-2">
+          <ThemeToggle />
+          <a class="btn btn-primary">{brand.cta}</a>
+        </div>
+      </nav>
+
+      <section class="py-16">
+        <h1 class="text-[clamp(32px,6vw,56px)] font-bold leading-tight">
+          Fast promo sites with Astro + Tailwind + daisyUI
+        </h1>
+        <p class="mt-4 text-lg opacity-80">{brand.description}</p>
+      </section>
+
+      <footer class="py-10 opacity-70 text-sm">
+        © {new Date().getFullYear()} {brand.name}
+      </footer>
+
+    </main>
+  </body>
 </html>
