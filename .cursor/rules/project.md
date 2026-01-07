@@ -93,6 +93,10 @@ make test  # PYTHONPATH=src uv run pytest -q
 
 ## Frontend Rules (apps/web/astro)
 
+**Подробная документация**: 
+- `.cursor/rules/design.md` - Правила дизайна
+- `.cursor/rules/language.md` - Правила языка и локализации
+
 ### Stack
 
 - Astro + Tailwind CSS + daisyUI
@@ -105,6 +109,7 @@ make test  # PYTHONPATH=src uv run pytest -q
 - Responsive by default
 - Static-first (S3 friendly)
 - Minimal client-side JS
+- Cross-platform compatibility (macOS, Windows, Linux)
 
 ### Structure
 
@@ -113,16 +118,37 @@ make test  # PYTHONPATH=src uv run pytest -q
 - `src/components/sections` - page blocks (Hero, Features, CTA, etc)
 - `src/pages` - compose sections only; avoid logic here
 - `src/styles/global.css` - global Tailwind entry only
+- `src/styles/custom.css` - custom styles (only when necessary, in separate files)
+
+### Component and Style Rules
+
+**Строгое правило**: Использовать существующие компоненты фреймворков.
+
+- **daisyUI компоненты в приоритете**: Использовать готовые компоненты daisyUI
+- **Не трогать код фреймворков**: Не изменять файлы node_modules, не переопределять стили фреймворков
+- **Кастомные стили в отдельных файлах**: Если нужны кастомные стили, создавать в `src/styles/` отдельными файлами
+- **Избегать написания своих компонентов**: Использовать существующие daisyUI/Tailwind компоненты
+- **Не модифицировать исходный код библиотек**: Работать только с публичным API
 
 ### UI Rules
 
 - **Mobile-first**: Always design for mobile first, then scale up
 - **Responsive utilities preferred**: Use `grid`, `flex`, `clamp`, breakpoints
 - **No fixed widths** unless justified (use responsive utilities)
-- **Dark/light theme**: Use daisyUI tokens (`bg-base-100`, `text-base-content`, etc)
+- **Dark/light theme support**: Use daisyUI tokens (`bg-base-100`, `text-base-content`, etc)
 - **No hardcoded colors**: Use semantic classes from daisyUI
 - **No inline styles**: All styles via Tailwind classes
 - **Layout base**: `max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8`
+- **Cross-platform**: Site must work identically on macOS, Windows, Linux
+
+### Configuration Rules
+
+**Строгое правило**: Все переменные сайта в одном файле.
+
+- **Единый файл конфигурации**: `src/config/brand.ts`
+- **Все переменные в brand.ts**: Название, описание, контакты, URL, CTA, тема, SEO
+- **Не хардкодить значения**: Все данные из конфигурации
+- **Single source of truth**: Все переменные в одном месте
 
 ### JS Rules
 
@@ -135,6 +161,17 @@ make test  # PYTHONPATH=src uv run pytest -q
 
 - **No duplicated strings**: Pull from `src/config/*` or data files
 - **Single source of truth**: All text content in config files
+
+### Language Rules
+
+**Строгое правило**: Только английский язык.
+
+- **Язык по умолчанию**: Английский деловой стиль с акцентом на USA
+- **Ориентация**: USA / UK / GE, но язык только английский
+- **Русский язык запрещен**: Ни в коде, ни на сайте, ни в комментариях
+- **Проверка на кириллицу**: Обязательна перед коммитом
+- **Google Translate**: Обязательная интеграция для удобства пользователей
+- **Деловой английский**: Professional business English, USA стиль
 
 ### File Naming
 
@@ -297,11 +334,18 @@ make test  # PYTHONPATH=src uv run pytest -q
    - Новая функциональность должна иметь тесты
    - Тесты должны быть написаны до реализации (TDD)
 
-3. Проверить что все тесты проходят
+3. **Проверка на кириллицу** (обязательно):
+   ```bash
+   # Проверить на наличие кириллицы в коде
+   grep -r '[А-Яа-яЁё]' apps/web/astro/src --exclude-dir=node_modules
+   # Если найдено - исправить перед коммитом
+   ```
 
-4. Обновить CHANGELOG.md если нужно
+4. Проверить что все тесты проходят
 
-5. Убедиться что версии зависимостей точные
+5. Обновить CHANGELOG.md если нужно
+
+6. Убедиться что версии зависимостей точные
 
 ### Docker Compose Usage
 
@@ -486,6 +530,16 @@ PYTHONPATH=src uv run pytest -q
 - **Коммитить Python код без тестов**: Тесты обязательны для новой функциональности
 - **Создавать большие Python файлы**: Максимум 200-300 строк, использовать декомпозицию
 - **Реализовывать функциональность без тестов**: Сначала тест, потом код (TDD)
+- **Модифицировать код фреймворков**: Не изменять файлы node_modules, не переопределять стили библиотек
+- **Хардкодить переменные сайта**: Все значения должны быть в `src/config/brand.ts`
+- **Создавать кастомные компоненты без необходимости**: Использовать существующие daisyUI компоненты
+- **Игнорировать поддержку тем**: Всегда поддерживать light и dark темы
+- **Использовать системно-специфичные решения**: Кросс-платформенность обязательна
+- **Использовать русский язык**: Строго запрещено (только английский)
+- **Кириллица в коде**: Строго запрещена (обязательная проверка перед коммитом)
+- **Русские комментарии**: Только английский язык
+- **Русские строки в коде**: Только английский язык
+- **Игнорировать проверку на кириллицу**: Обязательна перед коммитом
 
 ## Best Practices
 
