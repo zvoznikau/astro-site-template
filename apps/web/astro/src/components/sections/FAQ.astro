@@ -56,7 +56,7 @@ import { brand } from '../../config/brand'
   
   /* FAQ Content - visible ONLY when parent has active class */
   .faq-item.active .faq-content {
-    display: block;
+    display: block !important;
   }
   
   /* Force hide content if parent is not active */
@@ -71,81 +71,83 @@ import { brand } from '../../config/brand'
 </style>
 
 <script is:inline>
-  // FAQ Accordion - Event delegation approach
-  function initFAQ() {
-    var container = document.getElementById('faq-container');
-    if (!container) {
-      setTimeout(initFAQ, 100);
-      return;
-    }
-    
-    // CRITICAL: Close ALL items first
-    var allItems = container.querySelectorAll('[data-faq-item]');
-    for (var k = 0; k < allItems.length; k++) {
-      allItems[k].classList.remove('active');
-      var btn = allItems[k].querySelector('[data-faq-button]');
-      if (btn) {
-        btn.setAttribute('aria-expanded', 'false');
-      }
-    }
-    
-    // Open first item by default
-    var firstItem = container.querySelector('[data-faq-item="0"]');
-    if (firstItem) {
-      firstItem.classList.add('active');
-      var firstButton = firstItem.querySelector('[data-faq-button="0"]');
-      if (firstButton) {
-        firstButton.setAttribute('aria-expanded', 'true');
-      }
-    }
-    
-    // Event delegation - one handler for all buttons
-    container.addEventListener('click', function(e) {
-      var target = e.target;
-      // Find the button that was clicked
-      while (target && !target.hasAttribute('data-faq-button')) {
-        target = target.parentElement;
-        if (!target || target === container) return;
+  // FAQ Accordion - Simple and reliable
+  (function() {
+    function setupFAQ() {
+      var container = document.getElementById('faq-container');
+      if (!container) {
+        setTimeout(setupFAQ, 100);
+        return;
       }
       
-      if (!target) return;
-      
-      e.preventDefault();
-      e.stopPropagation();
-      
-      var buttonIndex = target.getAttribute('data-faq-button');
-      var currentItem = container.querySelector('[data-faq-item="' + buttonIndex + '"]');
-      if (!currentItem) return;
-      
-      var isOpen = currentItem.classList.contains('active');
-      
-      // Close ALL items first
+      // CRITICAL: Close ALL items first
       var allItems = container.querySelectorAll('[data-faq-item]');
-      for (var j = 0; j < allItems.length; j++) {
-        allItems[j].classList.remove('active');
-        var btnItem = allItems[j].querySelector('[data-faq-button]');
-        if (btnItem) {
-          btnItem.setAttribute('aria-expanded', 'false');
+      for (var k = 0; k < allItems.length; k++) {
+        allItems[k].classList.remove('active');
+        var btn = allItems[k].querySelector('[data-faq-button]');
+        if (btn) {
+          btn.setAttribute('aria-expanded', 'false');
         }
       }
       
-      // If clicked item was closed, open it
-      if (!isOpen) {
-        currentItem.classList.add('active');
-        target.setAttribute('aria-expanded', 'true');
+      // Open first item by default
+      var firstItem = container.querySelector('[data-faq-item="0"]');
+      if (firstItem) {
+        firstItem.classList.add('active');
+        var firstButton = firstItem.querySelector('[data-faq-button="0"]');
+        if (firstButton) {
+          firstButton.setAttribute('aria-expanded', 'true');
+        }
       }
+      
+      // Add click handlers to all buttons
+      var buttons = container.querySelectorAll('[data-faq-button]');
+      for (var i = 0; i < buttons.length; i++) {
+        var btn = buttons[i];
+        var btnIndex = btn.getAttribute('data-faq-button');
+        
+        // Create closure to preserve index and button reference
+        (function(index, button) {
+          button.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            var currentItem = container.querySelector('[data-faq-item="' + index + '"]');
+            if (!currentItem) return;
+            
+            // Check if item is open BEFORE closing all
+            var isOpen = currentItem.classList.contains('active');
+            
+            // Close ALL items first
+            var allItems = container.querySelectorAll('[data-faq-item]');
+            for (var j = 0; j < allItems.length; j++) {
+              allItems[j].classList.remove('active');
+              var btnItem = allItems[j].querySelector('[data-faq-button]');
+              if (btnItem) {
+                btnItem.setAttribute('aria-expanded', 'false');
+              }
+            }
+            
+            // If clicked item was closed, open it
+            if (!isOpen) {
+              currentItem.classList.add('active');
+              button.setAttribute('aria-expanded', 'true');
+            }
+          };
+        })(btnIndex, btn);
+      }
+    }
+    
+    // Initialize
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupFAQ);
+    } else {
+      setupFAQ();
+    }
+    
+    // Fallback
+    window.addEventListener('load', function() {
+      setTimeout(setupFAQ, 50);
     });
-  }
-  
-  // Initialize
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFAQ);
-  } else {
-    initFAQ();
-  }
-  
-  // Fallback
-  window.addEventListener('load', function() {
-    setTimeout(initFAQ, 50);
-  });
+  })();
 </script>
