@@ -39,7 +39,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
           <div class="carousel-container relative overflow-hidden rounded-3xl">
             <div class="carousel-track flex transition-transform duration-500 ease-in-out" id="carousel-track">
               <!-- Clone of last slide (for infinite loop) -->
-              <div class="carousel-slide carousel-clone min-w-full flex-shrink-0 p-2">
+              <div class="carousel-slide carousel-clone min-w-full flex-shrink-0 p-2 transition-transform duration-500 ease-in-out">
                 <img
                   src={brand.images.hero.src}
                   alt={`${brand.images.hero.alt || ''} - Clone`}
@@ -49,7 +49,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
               </div>
               <!-- 5 identical images -->
               {Array.from({ length: 5 }).map((_, index) => (
-                <div class="carousel-slide min-w-full flex-shrink-0 p-2">
+                <div class="carousel-slide min-w-full flex-shrink-0 p-2 transition-transform duration-500 ease-in-out">
                   <img
                     src={brand.images.hero.src}
                     alt={`${brand.images.hero.alt || ''} - Slide ${index + 1}`}
@@ -59,7 +59,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
                 </div>
               ))}
               <!-- Clone of first slide (for infinite loop) -->
-              <div class="carousel-slide carousel-clone min-w-full flex-shrink-0 p-2">
+              <div class="carousel-slide carousel-clone min-w-full flex-shrink-0 p-2 transition-transform duration-500 ease-in-out">
                 <img
                   src={brand.images.hero.src}
                   alt={`${brand.images.hero.alt || ''} - Clone`}
@@ -114,6 +114,12 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
   </div>
 </section>
 
+<style>
+  .carousel-slide {
+    transform-origin: center center;
+  }
+</style>
+
 <script>
   // Carousel functionality with infinite loop and auto-play
   (function initCarousel() {
@@ -132,7 +138,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
     const autoPlayDelay = 3000; // 3 seconds
     let isTransitioning = false;
     
-    // Update carousel position
+    // Update carousel position and scale
     function updateCarousel(skipTransition = false) {
       if (skipTransition) {
         track.style.transition = 'none';
@@ -147,6 +153,37 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
         void track.offsetWidth;
         track.style.transition = 'transform 0.5s ease-in-out';
       }
+      
+      // Update scale for each slide based on distance from center
+      const slides = track.querySelectorAll('.carousel-slide');
+      slides.forEach((slide, index) => {
+        const distance = Math.abs(index - currentSlide);
+        let scale = 1;
+        
+        if (distance === 0) {
+          // Center slide - full size
+          scale = 1;
+        } else if (distance === 1) {
+          // Adjacent slides - smaller (symmetric left/right)
+          scale = 0.65;
+        } else {
+          // Further slides - much smaller (symmetric left/right)
+          scale = 0.4;
+        }
+        
+        if (skipTransition) {
+          slide.style.transition = 'none';
+        } else {
+          slide.style.transition = 'transform 0.5s ease-in-out';
+        }
+        
+        slide.style.transform = `scale(${scale})`;
+        
+        if (skipTransition) {
+          void slide.offsetWidth;
+          slide.style.transition = 'transform 0.5s ease-in-out';
+        }
+      });
       
       // Update dots (map to real slide index)
       const realSlideIndex = currentSlide === 0 ? totalSlides - 1 : 
