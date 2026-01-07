@@ -112,7 +112,7 @@ export const brand = {
 
   // Theme configuration
   theme: {
-    default: 'light',
+    default: 'dark', // Start with dark theme
     available: ['light', 'dark'],
   },
 

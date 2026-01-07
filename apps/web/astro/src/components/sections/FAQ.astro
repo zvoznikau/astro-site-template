@@ -11,22 +11,22 @@ import { brand } from '../../config/brand'
       <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
         <span class="gradient-text">FAQ</span>
       </h2>
-      <p class="text-xl text-white/80 max-w-2xl mx-auto">
+      <p class="text-xl text-base-content/80 max-w-2xl mx-auto">
         Common questions about DemoAPPmax.
       </p>
     </div>
     <div class="max-w-3xl mx-auto">
       <div class="space-y-4" id="faq-container">
         {brand.faq.map((item, index) => (
-          <div class="faq-item border border-white/30 rounded-xl overflow-hidden bg-white/10 backdrop-blur-md card-shadow shadow-xl" data-faq-index={index}>
+          <div class="faq-item border border-base-content/30 rounded-xl overflow-hidden bg-base-content/10 backdrop-blur-md card-shadow shadow-xl" data-faq-index={index}>
             <button
               type="button"
-              class="faq-button flex items-center justify-between w-full px-6 py-5 cursor-pointer hover:bg-white/10 transition-colors text-left"
+              class="faq-button flex items-center justify-between w-full px-6 py-5 cursor-pointer hover:bg-base-content/10 transition-colors text-left"
               aria-expanded={index === 0 ? 'true' : 'false'}
             >
-              <span class="text-lg font-semibold text-white pr-4">{item.question}</span>
+              <span class="text-lg font-semibold text-base-content pr-4">{item.question}</span>
               <svg
-                class="faq-arrow w-5 h-5 text-white/70 transition-transform duration-300 flex-shrink-0"
+                class="faq-arrow w-5 h-5 text-base-content/70 transition-transform duration-300 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -36,7 +36,7 @@ import { brand } from '../../config/brand'
             </button>
             <div class={`faq-content overflow-hidden transition-all duration-300 ease-in-out ${index === 0 ? 'faq-open' : ''}`}>
               <div class="px-6 pb-5">
-                <p class="text-base text-white/70 leading-relaxed">{item.answer}</p>
+                <p class="text-base text-base-content/70 leading-relaxed">{item.answer}</p>
               </div>
             </div>
           </div>

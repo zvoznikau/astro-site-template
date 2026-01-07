@@ -22,8 +22,22 @@
 /* Ensure html and body have consistent background */
 html {
   height: 100%;
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #581c87 50%, #1e1b4b 75%, #0f172a 100%);
   background-attachment: fixed;
+}
+
+/* Dark theme: dark background */
+html[data-theme='dark'],
+html:not([data-theme]) {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #581c87 50%, #1e1b4b 75%, #0f172a 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* Light theme: light background */
+html[data-theme='light'] {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 25%, #f1f5f9 50%, #ffffff 75%, #f8fafc 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
 }
 
 body {
@@ -45,18 +59,48 @@ body {
   --n: 215 28% 17%; /* Dark gray #1f2937 */
   --nc: 0 0% 100%;
   
-  /* Pure white like astro.build */
-  --b1: 0 0% 100%; /* #ffffff */
-  --b2: 210 20% 98%; /* #f9fafb */
-  --b3: 210 20% 96%; /* #f3f4f6 */
+  /* Light background */
+  --b1: 0 0% 98%; /* #fafafa */
+  --b2: 210 20% 95%; /* #f3f4f6 */
+  --b3: 210 20% 92%; /* #e5e7eb */
   
-  /* Almost black text */
-  --bc: 0 0% 4%; /* #0a0a0a */
+  /* Dark text for light theme */
+  --bc: 0 0% 4%; /* #0a0a0a - почти чёрный */
   
   --in: 217 91% 60%;
   --su: 142 76% 36%;
   --wa: 38 92% 50%;
   --er: 0 84% 60%;
+}
+
+/* Force text-base-content to use CSS variable for proper inversion */
+[data-theme='light'] .text-base-content,
+[data-theme='light'] .text-base-content\/80,
+[data-theme='light'] .text-base-content\/70,
+[data-theme='light'] .text-base-content\/60,
+[data-theme='light'] .text-base-content\/50,
+[data-theme='light'] .text-base-content\/30 {
+  color: hsl(var(--bc));
+}
+
+[data-theme='light'] .text-base-content\/80 {
+  color: hsl(var(--bc) / 0.8);
+}
+
+[data-theme='light'] .text-base-content\/70 {
+  color: hsl(var(--bc) / 0.7);
+}
+
+[data-theme='light'] .text-base-content\/60 {
+  color: hsl(var(--bc) / 0.6);
+}
+
+[data-theme='light'] .text-base-content\/50 {
+  color: hsl(var(--bc) / 0.5);
+}
+
+[data-theme='light'] .text-base-content\/30 {
+  color: hsl(var(--bc) / 0.3);
 }
 
 /* DaisyUI theme variables for dark theme */
@@ -95,7 +139,8 @@ body {
   background-clip: text;
 }
 
-[data-theme='dark'] .gradient-text {
+[data-theme='dark'] .gradient-text,
+html:not([data-theme]) .gradient-text {
   background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

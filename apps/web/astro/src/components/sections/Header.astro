@@ -6,7 +6,7 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
 <header class="sticky top-0 z-50 bg-transparent backdrop-blur-md border-b border-white/10">
   <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
     <div class="flex items-center justify-between">
-      <a href="/" class="text-xl font-bold text-white hover:opacity-80 transition-opacity">
+      <a href="/" class="text-xl font-bold text-base-content hover:opacity-80 transition-opacity">
         {brand.name}
       </a>
       <div class="flex items-center gap-8">
@@ -15,7 +15,7 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
           {brand.navigation.items.map((item) => (
             <a
               href={item.href}
-              class="text-sm font-medium text-white/70 hover:text-white transition-colors"
+              class="text-sm font-medium text-base-content/70 hover:text-base-content transition-colors"
               target={item.external ? '_blank' : undefined}
               rel={item.external ? 'noopener noreferrer' : undefined}
             >
@@ -50,7 +50,7 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
               <li>
                 <a
                   href={item.href}
-                  class="text-sm font-medium text-white"
+                  class="text-sm font-medium text-base-content"
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noopener noreferrer' : undefined}
                 >
