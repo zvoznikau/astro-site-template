@@ -103,6 +103,10 @@ body {
   color: hsl(var(--bc) / 0.5);
 }
 
+[data-theme='light'] .text-base-content\/75 {
+  color: hsl(var(--bc) / 0.75);
+}
+
 [data-theme='light'] .text-base-content\/30 {
   color: hsl(var(--bc) / 0.3);
 }

@@ -56,7 +56,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
         <!-- Shine effect -->
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-base-content/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         <div class="absolute top-4 right-4">
-          <span class="px-3 py-1 text-xs font-bold bg-emerald-500/30 text-emerald-200 rounded-full backdrop-blur-sm border border-emerald-400/50 animate-bounce-subtle">Best value</span>
+          <span class="px-3 py-1 text-xs font-bold bg-emerald-800 text-white dark:bg-emerald-500/30 dark:text-emerald-200 rounded-full backdrop-blur-sm border-0 dark:border dark:border-emerald-400/50 animate-bounce-subtle">Best value</span>
         </div>
         <div class="space-y-6 relative z-10">
           <div>
@@ -68,7 +68,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
               </div>
               <div class="flex items-center gap-2 text-sm">
                 <span class="line-through text-base-content/50">{monthlyYearlyFormatted}</span>
-                <span class="text-emerald-400 font-semibold">Save {savingsPercent}%</span>
+                <span class="save-percent-text font-semibold">Save {savingsPercent}%</span>
               </div>
             </div>
           </div>
@@ -88,6 +88,25 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
 </section>
 
 <style>
+  /* Save percent text color - red text on yellow background like discount codes */
+  .save-percent-text {
+    color: rgb(220 38 38); /* red-600 */
+    background-color: rgb(254 240 138); /* yellow-100 */
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  [data-theme='dark'] .save-percent-text,
+  html:not([data-theme]) .save-percent-text {
+    color: rgb(220 38 38); /* red-600 */
+    background-color: rgb(113 63 18 / 0.3); /* yellow-900 with opacity */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
   @keyframes pulse-slow {
     0%, 100% {
       opacity: 0.3;
