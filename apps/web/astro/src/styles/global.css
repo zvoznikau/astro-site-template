@@ -230,46 +230,25 @@ html:not([data-theme]) .gradient-text {
 }
 
 /* Card blocks - separated for light and dark themes */
-/* SocialProof cards - 40% opacity */
+/* All cards have the same transparency */
 /* Light theme: white backgrounds with black shadows */
-[data-theme='light'] #social-proof .card-block {
-  background-color: rgba(255, 255, 255, 0.4);
-}
-
-[data-theme='light'] #social-proof .card-block:hover {
+[data-theme='light'] .card-block {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Dark theme: black backgrounds with white shadows */
-[data-theme='dark'] #social-proof .card-block,
-html:not([data-theme]) #social-proof .card-block {
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-[data-theme='dark'] #social-proof .card-block:hover,
-html:not([data-theme]) #social-proof .card-block:hover {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Other cards (Features, HowItWorks, FAQ, Pricing) - 60% opacity */
-/* Light theme: white backgrounds with black shadows */
-[data-theme='light'] .card-block {
+[data-theme='light'] .card-block:hover {
   background-color: rgba(255, 255, 255, 0.6);
 }
 
-[data-theme='light'] .card-block:hover {
-  background-color: rgba(255, 255, 255, 0.7);
-}
-
-/* Dark theme: black backgrounds with white shadows */
+/* Dark theme: black backgrounds with white shadows - more transparent */
 [data-theme='dark'] .card-block,
 html:not([data-theme]) .card-block {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.35);
 }
 
 [data-theme='dark'] .card-block:hover,
 html:not([data-theme]) .card-block:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.45);
 }
 
 /* Shadows - separated for light and dark themes */
@@ -290,23 +269,23 @@ html:not([data-theme]) .card-block:hover {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-/* Dark theme: white shadows */
+/* Dark theme: standard black shadows (same as light theme) */
 [data-theme='dark'] .card-block.shadow-xl,
 html:not([data-theme]) .card-block.shadow-xl {
-  box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 10px 10px -5px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 [data-theme='dark'] .card-block.shadow-2xl,
 html:not([data-theme]) .card-block.shadow-2xl {
-  box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 [data-theme='dark'] .card-block:hover.shadow-xl,
 html:not([data-theme]) .card-block:hover.shadow-xl {
-  box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 [data-theme='dark'] .card-block:hover.shadow-2xl,
 html:not([data-theme]) .card-block:hover.shadow-2xl {
-  box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
