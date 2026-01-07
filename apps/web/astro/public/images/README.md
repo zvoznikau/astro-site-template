@@ -4,6 +4,14 @@ This directory contains images used in the landing page.
 
 ## Required Images
 
+### `apple-logo-white.png`
+- **Location**: App Store badge buttons
+- **Size**: 20x24px (recommended, can be larger with proper aspect ratio)
+- **Format**: PNG with transparent background
+- **Content**: White Apple logo for use on blue button background
+- **Usage**: Displayed in "Download on the App Store" buttons
+- **Note**: If image is not found, SVG fallback will be used
+
 ### `hero-app-mockup.svg` (or `.png`)
 - **Location**: Hero section
 - **Size**: 400x711px (9:16 aspect ratio for mobile mockup)

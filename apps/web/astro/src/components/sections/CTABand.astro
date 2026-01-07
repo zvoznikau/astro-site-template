@@ -1,5 +1,6 @@
 ---
 import { brand } from '../../config/brand'
+import AppStoreBadge from '../ui/AppStoreBadge.astro'
 ---
 
 <!-- CTA Band: Astro.build style -->
@@ -15,17 +16,7 @@ import { brand } from '../../config/brand'
       Catch issues before they affect your users.
     </p>
     <div class="pt-4">
-      <a
-        href={brand.urls.appStore}
-        class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-white rounded-lg bg-blue-600 hover:bg-blue-500 transition-all shadow-lg hover:shadow-blue-500/40 hover:scale-[1.02]"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {brand.cta.primary}
-        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-        </svg>
-      </a>
+      <AppStoreBadge href={brand.urls.appStore} size="lg" class="hover:scale-[1.02]" />
     </div>
   </div>
   </div>
