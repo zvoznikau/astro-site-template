@@ -19,6 +19,18 @@
   --astro-indigo: #6366f1;
 }
 
+/* Ensure html and body have consistent background */
+html {
+  height: 100%;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #581c87 50%, #1e1b4b 75%, #0f172a 100%);
+  background-attachment: fixed;
+}
+
+body {
+  min-height: 100%;
+  background: transparent;
+}
+
 /* DaisyUI theme variables for light theme (Astro.build style) */
 [data-theme='light'] {
   --p: 262 83% 58%; /* Purple #7c3aed */

@@ -16,19 +16,13 @@ import { brand } from '../../config/brand'
       </p>
     </div>
     <div class="max-w-3xl mx-auto">
-      <div class="space-y-4">
+      <div class="space-y-4" id="faq-container">
         {brand.faq.map((item, index) => (
-          <div class="faq-item border border-white/30 rounded-xl overflow-hidden bg-white/10 backdrop-blur-md card-shadow shadow-xl">
-            <input
-              type="radio"
-              name="faq-accordion"
-              id={`faq-${index}`}
-              class="faq-radio hidden"
-              checked={index === 0}
-            />
-            <label
-              for={`faq-${index}`}
-              class="flex items-center justify-between w-full px-6 py-5 cursor-pointer hover:bg-white/10 transition-colors"
+          <div class="faq-item border border-white/30 rounded-xl overflow-hidden bg-white/10 backdrop-blur-md card-shadow shadow-xl" data-faq-index={index}>
+            <button
+              type="button"
+              class="faq-button flex items-center justify-between w-full px-6 py-5 cursor-pointer hover:bg-white/10 transition-colors text-left"
+              aria-expanded={index === 0 ? 'true' : 'false'}
             >
               <span class="text-lg font-semibold text-white pr-4">{item.question}</span>
               <svg
@@ -39,8 +33,8 @@ import { brand } from '../../config/brand'
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
-            </label>
-            <div class={`faq-content overflow-hidden transition-all duration-300 ease-in-out ${index === 0 ? 'max-h-[1000px]' : 'max-h-0'}`}>
+            </button>
+            <div class={`faq-content overflow-hidden transition-all duration-300 ease-in-out ${index === 0 ? 'faq-open' : ''}`}>
               <div class="px-6 pb-5">
                 <p class="text-base text-white/70 leading-relaxed">{item.answer}</p>
               </div>
@@ -53,11 +47,61 @@ import { brand } from '../../config/brand'
 </section>
 
 <style>
-  /* Show content when radio is checked */
-  .faq-radio:checked + label + .faq-content {
-    max-height: 1000px !important;
+  .faq-content {
+    max-height: 0;
   }
-  .faq-radio:checked + label .faq-arrow {
+  
+  .faq-content.faq-open {
+    max-height: 1000px;
+  }
+  
+  .faq-item.active .faq-arrow {
     transform: rotate(180deg);
   }
 </style>
+
+<script>
+  (function() {
+    // Initialize FAQ accordion
+    function initFAQ() {
+      const faqItems = document.querySelectorAll('.faq-item');
+      const faqButtons = document.querySelectorAll('.faq-button');
+      const faqContents = document.querySelectorAll('.faq-content');
+      
+      // Open first item by default
+      if (faqItems.length > 0) {
+        faqItems[0].classList.add('active');
+        faqContents[0].classList.add('faq-open');
+        faqButtons[0].setAttribute('aria-expanded', 'true');
+      }
+      
+      // Add click handlers
+      faqButtons.forEach((button, index) => {
+        button.addEventListener('click', function() {
+          const isOpen = faqItems[index].classList.contains('active');
+          
+          // Close all items
+          faqItems.forEach((item, i) => {
+            item.classList.remove('active');
+            faqContents[i].classList.remove('faq-open');
+            faqButtons[i].setAttribute('aria-expanded', 'false');
+          });
+          
+          // If clicked item was closed, open it
+          if (!isOpen) {
+            faqItems[index].classList.add('active');
+            faqContents[index].classList.add('faq-open');
+            faqButtons[index].setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    }
+    
+    // Run on page load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFAQ);
+    } else {
+      initFAQ();
+    }
+  })();
+</script>

@@ -84,10 +84,19 @@ const faqJsonLd = {
   })),
 }
 ---
-<html lang="en" data-theme={brand.theme.default}>
+<html lang="en" data-theme={brand.theme.default} class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Theme color for browser UI (matches site background) -->
+    <meta name="theme-color" content="#581c87" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#581c87" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#581c87" />
+    <!-- Safari/iOS status bar -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
     <title>{brand.seo.title}</title>
     <meta name="description" content={brand.seo.description} />
     <meta name="keywords" content={brand.seo.keywords.join(', ')} />
@@ -134,8 +143,8 @@ const faqJsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   </head>
 
-  <body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white antialiased">
-    <main>
+  <body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white antialiased bg-fixed">
+    <main class="relative">
       {
         blocksWithPauses.map((item) => {
           if (item.type === 'block' && item.name) {
