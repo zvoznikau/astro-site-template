@@ -17,18 +17,25 @@ import { brand } from '../../config/brand'
     </div>
     
     <!-- 3 blocks in a row on desktop, vertical on mobile -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-      {brand.howItWorks.map((step, index) => (
-        <div class="relative flex flex-col h-full">
-          <div class="absolute -top-4 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 md:-left-4 w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-lg shadow-lg z-10">
-            {index + 1}
+    <div class="relative">
+      <!-- Connecting line on desktop -->
+      <div class="hidden md:block absolute top-24 left-1/4 right-1/4 h-1 bg-gradient-to-r from-purple-400/60 via-purple-500/80 to-purple-400/60 rounded-full"></div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
+        {brand.howItWorks.map((step, index) => (
+          <div class="flex flex-col h-full relative">
+            <!-- Large number background -->
+            <div class="absolute -top-6 left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 w-16 h-16 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-2xl shadow-2xl z-20 border-4 border-base-100">
+              {index + 1}
+            </div>
+            
+            <div class="pt-10 p-6 rounded-xl card-block backdrop-blur-md shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex flex-col h-full text-center">
+              <h3 class="text-2xl font-bold text-base-content mb-4 mt-6">{step.title}</h3>
+              <p class="text-base text-base-content/70 leading-relaxed flex-grow">{step.description}</p>
+            </div>
           </div>
-          <div class="pt-8 p-6 rounded-xl card-block backdrop-blur-md shadow-xl hover:shadow-2xl transition-all flex flex-col h-full">
-            <h3 class="text-2xl font-bold text-base-content mb-4">{step.title}</h3>
-            <p class="text-base text-base-content/70 leading-relaxed flex-grow">{step.description}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </section>
