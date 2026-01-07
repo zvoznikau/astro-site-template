@@ -289,3 +289,18 @@ html:not([data-theme]) .card-block:hover.shadow-xl {
 html:not([data-theme]) .card-block:hover.shadow-2xl {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
+
+/* Background overlays for Pricing and AppStoreDescription */
+/* Light theme: white gradient */
+[data-theme='light'] .pricing-bg-overlay,
+[data-theme='light'] .faq-bg-overlay {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.6)) !important;
+}
+
+/* Dark theme: black gradient */
+[data-theme='dark'] .pricing-bg-overlay,
+html:not([data-theme]) .pricing-bg-overlay,
+[data-theme='dark'] .faq-bg-overlay,
+html:not([data-theme]) .faq-bg-overlay {
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.3)) !important;
+}
