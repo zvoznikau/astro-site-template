@@ -1,6 +1,5 @@
 <button
-  id="theme-toggle-btn"
-  class="p-2 rounded-lg text-base-content/70 hover:text-base-content hover:bg-base-content/10 transition-colors"
+  class="theme-toggle-btn p-2 rounded-lg text-base-content/70 hover:text-base-content hover:bg-base-content/10 transition-colors"
   aria-label="Toggle theme"
   title="Toggle theme"
 >
@@ -59,18 +58,18 @@
       updateThemeIcon();
     }
     
-    // Update icon visibility based on current theme
+    // Update icon visibility based on current theme (all instances)
     function updateThemeIcon() {
       const theme = getCurrentTheme();
-      const lightIcon = document.querySelector('.theme-icon-light');
-      const darkIcon = document.querySelector('.theme-icon-dark');
+      const lightIcons = document.querySelectorAll('.theme-icon-light');
+      const darkIcons = document.querySelectorAll('.theme-icon-dark');
       
       if (theme === 'dark') {
-        if (lightIcon) lightIcon.classList.add('hidden');
-        if (darkIcon) darkIcon.classList.remove('hidden');
+        lightIcons.forEach(icon => icon.classList.add('hidden'));
+        darkIcons.forEach(icon => icon.classList.remove('hidden'));
       } else {
-        if (lightIcon) lightIcon.classList.remove('hidden');
-        if (darkIcon) darkIcon.classList.add('hidden');
+        lightIcons.forEach(icon => icon.classList.remove('hidden'));
+        darkIcons.forEach(icon => icon.classList.add('hidden'));
       }
     }
     
@@ -87,11 +86,15 @@
       updateThemeIcon();
     }
     
-    // Set up toggle button
-    const toggleBtn = document.getElementById('theme-toggle-btn');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', toggleTheme);
-    }
+    // Use event delegation to handle clicks on all theme toggle buttons
+    // This works for both existing and dynamically added buttons
+    document.addEventListener('click', (e) => {
+      const toggleBtn = e.target.closest('.theme-toggle-btn');
+      if (toggleBtn) {
+        e.stopPropagation();
+        toggleTheme();
+      }
+    });
     
     // Watch for theme changes (from other sources)
     const observer = new MutationObserver(() => {
