@@ -15,6 +15,8 @@ services:
     working_dir: /app
     volumes:
       - ./services/api-lambda:/app
-    command: sh -c "pip install uv && uv sync && uv run python -m http.server 8000"
+    command: sh -c "pip install uv && uv sync && uv run uvicorn api_lambda.app:app --host 0.0.0.0 --port 8000 --reload"
     ports:
       - "8000:8000"
+    environment:
+      - PYTHONPATH=/app/src

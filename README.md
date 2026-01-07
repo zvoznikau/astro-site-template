@@ -112,6 +112,10 @@ docker-compose down
 После запуска:
 - **Frontend**: http://localhost:4321
 - **Backend API**: http://localhost:8000
+  - Health check: http://localhost:8000/health
+  - API docs: http://localhost:8000/docs (FastAPI автоматическая документация)
+
+**Примечание**: Docker Compose настроен для локальной разработки с hot-reload. Изменения в коде автоматически применяются благодаря volumes.
 
 ### Способ 2: Локальный запуск без Docker
 
@@ -147,8 +151,8 @@ uv sync
 # Запуск FastAPI сервера (для разработки)
 uv run uvicorn api_lambda.app:app --reload --port 8000
 
-# Или через Python HTTP сервер (как в docker-compose)
-uv run python -m http.server 8000
+# С указанием host для доступа извне контейнера
+uv run uvicorn api_lambda.app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 API будет доступен на http://localhost:8000
