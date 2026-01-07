@@ -36,9 +36,9 @@ html:not([data-theme]) {
   animation: gradient-shift 15s ease infinite;
 }
 
-/* Light theme: light blue gradient background - covers full page */
+/* Light theme: light pastel blue gradient background - covers full page with animation */
 html[data-theme='light'] {
-  background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 25%, #dbeafe 50%, #f0f9ff 75%, #e0f2fe 100%);
+  background: linear-gradient(135deg, #bfdbfe 0%, #dbeafe 25%, #93c5fd 50%, #dbeafe 75%, #bfdbfe 100%);
   background-size: 200% 200%;
   background-attachment: fixed;
   animation: gradient-shift 15s ease infinite;
