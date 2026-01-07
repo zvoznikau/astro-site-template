@@ -56,7 +56,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
         <!-- Shine effect -->
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-base-content/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         <div class="absolute top-4 right-4">
-          <span class="px-3 py-1 text-xs font-bold bg-emerald-800 text-white dark:bg-emerald-500/30 dark:text-emerald-200 rounded-full backdrop-blur-sm border-0 dark:border dark:border-emerald-400/50 animate-bounce-subtle">Best value</span>
+          <span class="px-3 py-1 text-xs font-bold rounded-full backdrop-blur-sm animate-bounce-subtle shadow-md best-value-badge">Best value</span>
         </div>
         <div class="space-y-6 relative z-10">
           <div>
@@ -88,6 +88,20 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
 </section>
 
 <style>
+  /* Best value badge */
+  .best-value-badge {
+    background-color: rgb(5 150 105); /* emerald-800 */
+    color: rgb(255 255 255); /* white */
+    border: none;
+  }
+  
+  [data-theme='dark'] .best-value-badge,
+  html:not([data-theme]) .best-value-badge {
+    background-color: rgba(16 185 129 / 0.3); /* emerald-500/30 */
+    color: rgb(167 243 208); /* emerald-200 */
+    border: 1px solid rgba(52 211 153 / 0.5); /* emerald-400/50 */
+  }
+  
   /* Save percent text color - red text on yellow background like discount codes */
   .save-percent-text {
     color: rgb(220 38 38); /* red-600 */
