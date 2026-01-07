@@ -101,6 +101,7 @@ export const brand = {
     support: 'mailto:support@demoappmax.com',
     privacy: 'https://demoappmax.com/privacy',
     terms: 'https://demoappmax.com/terms',
+    documentation: 'https://docs.demoappmax.com',
   },
 
   // Contact information
@@ -122,6 +123,7 @@ export const brand = {
       { label: 'How it works', href: '#how-it-works' },
       { label: 'Pricing', href: '#pricing' },
       { label: 'FAQ', href: '#faq' },
+      { label: 'Documentation', href: 'https://docs.demoappmax.com', external: true },
     ],
   },
 

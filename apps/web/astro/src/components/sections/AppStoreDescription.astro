@@ -4,9 +4,11 @@ import { brand } from '../../config/brand'
 
 <section
   id="app-store-description"
-  class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32"
+  class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32"
 >
-  <div class="max-w-4xl mx-auto">
+  <!-- Background overlay to highlight the block -->
+  <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-white/8 to-white/10 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8 backdrop-blur-sm"></div>
+  <div class="relative z-10 max-w-4xl mx-auto">
     <!-- Compatibility icon -->
     <div class="flex items-center gap-2 mb-6">
       <svg
@@ -32,50 +34,29 @@ import { brand } from '../../config/brand'
       </p>
     </div>
 
-    <!-- Developer links -->
+    <!-- Documentation link -->
     <div class="mt-8 pt-6 border-t border-white/10">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <a
-          href={brand.urls.website}
-          class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium"
-          target="_blank"
-          rel="noopener noreferrer"
+      <a
+        href={brand.urls.documentation}
+        class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          stroke-width="2"
         >
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-            />
-          </svg>
-          Website
-        </a>
-        <a
-          href={brand.urls.support}
-          class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium"
-        >
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          Support
-        </a>
-      </div>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          />
+        </svg>
+        Documentation
+      </a>
     </div>
   </div>
 </section>

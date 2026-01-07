@@ -12,10 +12,12 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
       <div class="flex items-center gap-8">
         <!-- Desktop menu -->
         <div class="hidden md:flex items-center gap-8">
-          {brand.navigation.items.slice(0, 3).map((item) => (
+          {brand.navigation.items.map((item) => (
             <a
               href={item.href}
               class="text-sm font-medium text-white/70 hover:text-white transition-colors"
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noopener noreferrer' : undefined}
             >
               {item.label}
             </a>
@@ -46,7 +48,12 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
           >
             {brand.navigation.items.map((item) => (
               <li>
-                <a href={item.href} class="text-sm font-medium">
+                <a
+                  href={item.href}
+                  class="text-sm font-medium text-white"
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                >
                   {item.label}
                 </a>
               </li>
