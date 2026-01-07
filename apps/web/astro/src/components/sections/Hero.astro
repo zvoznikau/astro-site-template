@@ -22,18 +22,19 @@ import { brand } from '../../config/brand'
       <div class="pt-6 flex flex-col sm:flex-row gap-4">
         <a
           href={brand.urls.appStore}
-          class="inline-flex items-center justify-center px-6 py-4 text-base font-semibold text-white rounded-lg gradient-bg hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl"
+          class="inline-flex items-center justify-center px-8 py-5 text-lg font-bold text-white rounded-lg bg-blue-600 hover:bg-blue-500 transition-all shadow-lg hover:shadow-blue-500/40 hover:scale-[1.02]"
           target="_blank"
           rel="noopener noreferrer"
         >
           {brand.cta.primary}
-          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </a>
         <a
           href="#pricing"
-          class="inline-flex items-center justify-center px-6 py-4 text-base font-semibold text-white border-2 border-white/30 rounded-lg hover:border-white/50 transition-colors"
+          class="inline-flex items-center justify-center px-8 py-5 text-lg font-bold text-white border-2 border-white/50 rounded-lg hover:border-white hover:bg-white/10 transition-all shadow-md"
+          style="border-width: 3px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);"
         >
           View pricing
         </a>

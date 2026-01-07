@@ -11,6 +11,9 @@ export const brand = {
     platform: 'iOS',
     valueProposition: 'Monitor your servers. Catch issues before users do.',
     secondaryLine: 'CPU, RAM, Disk, Network, alerts and status history.',
+    // App Store description
+    appStoreDescription:
+      'Stay organized and manage your server infrastructure with DemoAPPmax. Monitor CPU, RAM, Disk, and Network performance in real-time, receive instant alerts when thresholds are exceeded, and access comprehensive status history to track trends over time. DemoAPPmax is the server monitoring app that makes it easy to keep your infrastructure healthy and prevent issues before they affect your users. Accomplish what matters most each day with real-time monitoring and intelligent alerts, powerful tools designed to help you maintain optimal server performance.',
   },
 
   // Pricing
@@ -192,6 +195,7 @@ export const brand = {
   ],
 
   // Page configuration - block order
+  // Best practices for sales: Hero → SocialProof → Features → Description (builds interest) → HowItWorks → Pricing → FAQ → CTA
   pages: {
     index: {
       blocks: [
@@ -199,6 +203,7 @@ export const brand = {
         'Hero',
         'SocialProof',
         'Features',
+        'AppStoreDescription', // After Features: provides more context before pricing
         'HowItWorks',
         'Pricing',
         'FAQ',

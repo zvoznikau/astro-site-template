@@ -1,5 +1,12 @@
 ---
 import { brand } from '../../config/brand'
+
+// Calculate yearly price if paid monthly
+const monthlyPrice = parseFloat(brand.pricing.monthly.price.replace('$', ''))
+const yearlyPrice = parseFloat(brand.pricing.yearly.price.replace('$', ''))
+const monthlyYearlyTotal = monthlyPrice * 12
+const savingsPercent = Math.round((1 - yearlyPrice / monthlyYearlyTotal) * 100)
+const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
 ---
 
 <section
@@ -7,7 +14,7 @@ import { brand } from '../../config/brand'
   class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32"
 >
   <!-- Background overlay to separate from main background -->
-  <div class="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-purple-800/20 to-blue-900/30 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8 backdrop-blur-sm"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-white/8 to-white/10 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8 backdrop-blur-sm"></div>
   <div class="relative z-10 space-y-20">
     <div class="text-center">
       <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
@@ -21,21 +28,19 @@ import { brand } from '../../config/brand'
     <!-- Two columns: Monthly | Yearly -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
       <!-- Monthly Plan -->
-      <div class="pricing-card p-8 rounded-2xl bg-gradient-to-br from-blue-500/10 via-cyan-500/10 to-blue-500/10 backdrop-blur-md border-2 border-cyan-400/30 card-shadow hover:border-cyan-400/60 transition-all shadow-xl hover:scale-105 hover:shadow-cyan-500/20 relative overflow-hidden group">
-        <!-- Animated background glow -->
-        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-cyan-500/10 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <div class="space-y-6 relative z-10">
+      <div class="pricing-card p-8 rounded-2xl bg-gradient-to-br from-blue-500/15 via-cyan-500/10 to-blue-500/15 backdrop-blur-md border-2 border-cyan-400/30 card-shadow hover:border-cyan-400/50 transition-all shadow-xl hover:scale-[1.02] hover:shadow-cyan-500/20">
+        <div class="space-y-6">
           <div>
             <h3 class="text-2xl font-bold text-white mb-2 pricing-title">Monthly</h3>
             <div class="flex items-baseline gap-2 pricing-price">
               <span class="text-5xl font-bold text-white">{brand.pricing.monthly.price}</span>
-              <span class="text-lg text-white/60">/month</span>
+              <span class="text-lg text-white/70">/month</span>
             </div>
           </div>
-          <p class="text-base text-white/70 pricing-desc">Perfect for trying out DemoAPPmax.</p>
+          <p class="text-base text-white/75 pricing-desc">Perfect for trying out DemoAPPmax.</p>
           <a
             href={brand.urls.appStore}
-            class="pricing-button inline-flex items-center justify-center w-full px-6 py-3 text-base font-semibold text-cyan-300 border-2 border-cyan-400/50 rounded-lg hover:border-cyan-400 hover:bg-cyan-400/10 hover:text-cyan-200 transition-all shadow-md hover:shadow-cyan-400/30 hover:scale-105"
+            class="pricing-button inline-flex items-center justify-center w-full px-6 py-4 text-lg font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all shadow-lg hover:shadow-blue-500/40 hover:scale-[1.02]"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -44,10 +49,10 @@ import { brand } from '../../config/brand'
         </div>
       </div>
 
-      <!-- Yearly Plan (highlighted) - Premium colors: green/emerald for money/savings -->
-      <div class="pricing-card pricing-card-featured p-8 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-teal-500/20 to-cyan-500/20 backdrop-blur-md text-white card-shadow-lg relative overflow-hidden border-2 border-emerald-400/40 hover:scale-105 hover:shadow-emerald-500/30 transition-all group">
+      <!-- Yearly Plan (highlighted - premium, attractive) -->
+      <div class="pricing-card pricing-card-featured p-8 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-teal-500/20 to-cyan-500/20 backdrop-blur-md text-white card-shadow-lg relative overflow-hidden border-2 border-emerald-400/50 hover:scale-[1.02] hover:shadow-emerald-500/30 transition-all group shadow-2xl">
         <!-- Animated pulsing glow -->
-        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-teal-500/20 to-cyan-500/20 animate-pulse-slow"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-teal-500/15 to-cyan-500/15 animate-pulse-slow"></div>
         <!-- Shine effect -->
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         <div class="absolute top-4 right-4">
@@ -55,16 +60,22 @@ import { brand } from '../../config/brand'
         </div>
         <div class="space-y-6 relative z-10">
           <div>
-            <h3 class="text-2xl font-bold mb-2 pricing-title">Yearly</h3>
-            <div class="flex items-baseline gap-2 pricing-price">
-              <span class="text-5xl font-bold">{brand.pricing.yearly.price}</span>
-              <span class="text-lg opacity-90">/year</span>
+            <h3 class="text-2xl font-bold mb-2 pricing-title text-white">Yearly</h3>
+            <div class="space-y-2 pricing-price">
+              <div class="flex items-baseline gap-2">
+                <span class="text-5xl font-bold text-white">{brand.pricing.yearly.price}</span>
+                <span class="text-lg text-white/70">/year</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm">
+                <span class="line-through text-white/50">{monthlyYearlyFormatted}</span>
+                <span class="text-emerald-400 font-semibold">Save {savingsPercent}%</span>
+              </div>
             </div>
           </div>
-          <p class="text-base opacity-90 pricing-desc">Save money with annual billing.</p>
+          <p class="text-base text-white/75 pricing-desc">Save money with annual billing.</p>
           <a
             href={brand.urls.appStore}
-            class="pricing-button inline-flex items-center justify-center w-full px-6 py-3 text-base font-semibold bg-gradient-to-r from-emerald-400 to-teal-400 text-white rounded-lg hover:from-emerald-300 hover:to-teal-300 transition-all shadow-lg hover:shadow-emerald-500/50 font-bold hover:scale-105"
+            class="pricing-button inline-flex items-center justify-center w-full px-6 py-4 text-lg font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg transition-all shadow-xl hover:shadow-emerald-500/50 hover:scale-[1.02]"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -137,6 +148,7 @@ import { brand } from '../../config/brand'
       transform: translateY(-8px) scale(1.01);
     }
   }
+  
 </style>
 
 <script>

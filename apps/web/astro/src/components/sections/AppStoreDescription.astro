@@ -1,0 +1,82 @@
+---
+import { brand } from '../../config/brand'
+---
+
+<section
+  id="app-store-description"
+  class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32"
+>
+  <div class="max-w-4xl mx-auto">
+    <!-- Compatibility icon -->
+    <div class="flex items-center gap-2 mb-6">
+      <svg
+        class="w-6 h-6 text-white/70"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+        />
+      </svg>
+      <span class="text-sm font-medium text-white/70">{brand.product.platform}</span>
+    </div>
+
+    <!-- App Store description text -->
+    <div class="space-y-4">
+      <p class="text-base sm:text-lg text-white/80 leading-relaxed">
+        {brand.product.appStoreDescription}
+      </p>
+    </div>
+
+    <!-- Developer links -->
+    <div class="mt-8 pt-6 border-t border-white/10">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <a
+          href={brand.urls.website}
+          class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+            />
+          </svg>
+          Website
+        </a>
+        <a
+          href={brand.urls.support}
+          class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          Support
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
