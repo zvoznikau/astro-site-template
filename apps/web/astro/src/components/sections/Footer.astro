@@ -1,0 +1,57 @@
+---
+import { brand } from '../../config/brand'
+---
+
+<footer class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-base-300">
+  <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-base-content/70">
+    <div class="flex flex-wrap justify-center gap-4">
+      <a
+        href={brand.urls.privacy}
+        class="hover:text-primary transition-colors"
+      >
+        Privacy
+      </a>
+      <span>·</span>
+      <a
+        href={brand.urls.terms}
+        class="hover:text-primary transition-colors"
+      >
+        Terms
+      </a>
+      <span>·</span>
+      <a
+        href={`mailto:${brand.contact.support}`}
+        class="hover:text-primary transition-colors"
+      >
+        Support
+      </a>
+    </div>
+    <p>
+      © {new Date().getFullYear()} {brand.name}
+    </p>
+    <!-- Google Translate -->
+    <div id="google_translate_element"></div>
+  </div>
+</footer>
+
+<script is:inline>
+  // eslint-disable-next-line no-unused-vars
+  function googleTranslateElementInit() {
+    // eslint-disable-next-line no-undef
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,fr,de,it,pt,ru,zh,ja,ko',
+        // eslint-disable-next-line no-undef
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false,
+      },
+      'google_translate_element'
+    )
+  }
+</script>
+<script
+  is:inline
+  type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+></script>

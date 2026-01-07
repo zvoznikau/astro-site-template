@@ -1,0 +1,70 @@
+---
+import { brand } from '../../config/brand'
+import ThemeToggle from '../ui/ThemeToggle.astro'
+---
+
+<header class="sticky top-0 z-50 bg-base-100/50 backdrop-blur-sm">
+  <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+    <div class="flex items-center justify-between">
+      <a href="/" class="text-lg font-medium text-base-content hover:text-primary transition-colors">
+        {brand.name}
+      </a>
+      <div class="flex items-center gap-6">
+        <!-- Desktop menu -->
+        <div class="hidden md:flex items-center gap-6">
+          {brand.navigation.items.slice(0, 3).map((item) => (
+            <a
+              href={item.href}
+              class="text-sm text-base-content/70 hover:text-primary transition-colors"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+        
+        <!-- Mobile menu button -->
+        <div class="dropdown dropdown-end md:hidden">
+          <div tabindex="0" role="button" class="text-base-content/70">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </div>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content mt-2 z-[1] p-2 bg-base-100 rounded-lg w-40 border border-base-300"
+          >
+            {brand.navigation.items.map((item) => (
+              <li>
+                <a href={item.href} class="text-sm">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <ThemeToggle />
+        <a
+          href={brand.urls.appStore}
+          class="text-sm font-medium text-primary hover:opacity-80 transition-opacity"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {brand.cta.primary}
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+

@@ -1,0 +1,58 @@
+<svg width="400" height="711" viewBox="0 0 400 711" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Phone frame -->
+  <rect x="0" y="0" width="400" height="711" rx="40" fill="url(#phoneGradient)"/>
+  <rect x="10" y="10" width="380" height="691" rx="30" fill="#1a1a1a"/>
+  
+  <!-- Status bar -->
+  <rect x="20" y="20" width="360" height="40" rx="8" fill="#2a2a2a"/>
+  <circle cx="50" cy="40" r="4" fill="#36d399"/>
+  <rect x="70" y="35" width="60" height="10" rx="5" fill="#7c909a"/>
+  <rect x="320" y="35" width="50" height="10" rx="5" fill="#7c909a"/>
+  
+  <!-- Header -->
+  <rect x="20" y="80" width="360" height="60" rx="8" fill="#1c4e80"/>
+  <rect x="40" y="95" width="120" height="15" rx="4" fill="#ffffff"/>
+  <rect x="40" y="115" width="200" height="12" rx="4" fill="#7c909a"/>
+  
+  <!-- Dashboard cards -->
+  <rect x="20" y="160" width="170" height="120" rx="12" fill="#2a2a2a"/>
+  <rect x="30" y="170" width="60" height="8" rx="4" fill="#1c4e80"/>
+  <rect x="30" y="185" width="100" height="20" rx="4" fill="#36d399"/>
+  <rect x="30" y="210" width="80" height="8" rx="4" fill="#7c909a"/>
+  
+  <rect x="210" y="160" width="170" height="120" rx="12" fill="#2a2a2a"/>
+  <rect x="220" y="170" width="60" height="8" rx="4" fill="#1c4e80"/>
+  <rect x="220" y="185" width="100" height="20" rx="4" fill="#3abff8"/>
+  <rect x="220" y="210" width="80" height="8" rx="4" fill="#7c909a"/>
+  
+  <rect x="20" y="300" width="170" height="120" rx="12" fill="#2a2a2a"/>
+  <rect x="30" y="310" width="60" height="8" rx="4" fill="#1c4e80"/>
+  <rect x="30" y="325" width="100" height="20" rx="4" fill="#ea6947"/>
+  <rect x="30" y="350" width="80" height="8" rx="4" fill="#7c909a"/>
+  
+  <rect x="210" y="300" width="170" height="120" rx="12" fill="#2a2a2a"/>
+  <rect x="220" y="310" width="60" height="8" rx="4" fill="#1c4e80"/>
+  <rect x="220" y="325" width="100" height="20" rx="4" fill="#fbbd23"/>
+  <rect x="220" y="350" width="80" height="8" rx="4" fill="#7c909a"/>
+  
+  <!-- Chart area -->
+  <rect x="20" y="440" width="360" height="200" rx="12" fill="#2a2a2a"/>
+  <rect x="30" y="450" width="100" height="12" rx="4" fill="#1c4e80"/>
+  <path d="M40 550 L80 520 L120 540 L160 500 L200 510 L240 480 L280 490 L320 470 L360 460" stroke="#3abff8" stroke-width="3" fill="none"/>
+  <path d="M40 600 L80 580 L120 590 L160 560 L200 570 L240 550 L280 560 L320 540 L360 530" stroke="#36d399" stroke-width="3" fill="none"/>
+  
+  <!-- Bottom navigation -->
+  <rect x="20" y="660" width="360" height="31" rx="8" fill="#2a2a2a"/>
+  <circle cx="100" cy="675" r="8" fill="#1c4e80"/>
+  <circle cx="200" cy="675" r="8" fill="#7c909a"/>
+  <circle cx="300" cy="675" r="8" fill="#7c909a"/>
+  
+  <defs>
+    <linearGradient id="phoneGradient" x1="0" y1="0" x2="400" y2="711">
+      <stop offset="0%" stop-color="#1c4e80"/>
+      <stop offset="50%" stop-color="#7c909a"/>
+      <stop offset="100%" stop-color="#ea6947"/>
+    </linearGradient>
+  </defs>
+</svg>
+

@@ -1,0 +1,24 @@
+---
+import { brand } from '../../config/brand'
+---
+
+<section
+  id="how-it-works"
+  class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+>
+  <div class="space-y-12">
+    <div>
+      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+        How it works
+      </h2>
+    </div>
+    <div class="space-y-8">
+      {brand.howItWorks.map((step) => (
+        <div>
+          <h3 class="text-xl font-semibold mb-2">{step.title}</h3>
+          <p class="text-base-content/70">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

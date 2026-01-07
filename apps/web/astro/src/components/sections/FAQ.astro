@@ -1,0 +1,24 @@
+---
+import { brand } from '../../config/brand'
+---
+
+<section
+  id="faq"
+  class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+>
+  <div class="space-y-12">
+    <div>
+      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+        FAQ
+      </h2>
+    </div>
+    <div class="space-y-8">
+      {brand.faq.map((item) => (
+        <div>
+          <h3 class="text-lg font-semibold mb-2">{item.question}</h3>
+          <p class="text-base-content/70">{item.answer}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

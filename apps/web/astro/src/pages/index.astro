@@ -1,40 +1,129 @@
 ---
 import '../styles/global.css'
 import { brand } from '../config/brand'
-import ThemeToggle from '../components/ui/ThemeToggle.astro'
----
 
-<html lang="en" data-theme={brand.theme}>
+// Import all block components
+import Header from '../components/sections/Header.astro'
+import Hero from '../components/sections/Hero.astro'
+import SocialProof from '../components/sections/SocialProof.astro'
+import Features from '../components/sections/Features.astro'
+import HowItWorks from '../components/sections/HowItWorks.astro'
+import Pricing from '../components/sections/Pricing.astro'
+import FAQ from '../components/sections/FAQ.astro'
+import CTABand from '../components/sections/CTABand.astro'
+import Footer from '../components/sections/Footer.astro'
+
+// Block component mapping
+const blockMap = {
+  Header,
+  Hero,
+  SocialProof,
+  Features,
+  HowItWorks,
+  Pricing,
+  FAQ,
+  CTABand,
+  Footer,
+}
+
+// Get block order from config
+const blockOrder = brand.pages.index.blocks
+
+// Generate JSON-LD for SEO
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: brand.name,
+  url: brand.seo.canonical,
+  description: brand.seo.description,
+}
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: brand.name,
+  url: brand.seo.canonical,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: brand.contact.email,
+    contactType: 'customer service',
+  },
+}
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: brand.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+}
+---
+<html lang="en" data-theme={brand.theme.default}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{brand.name}</title>
+    <title>{brand.seo.title}</title>
+    <meta name="description" content={brand.seo.description} />
+    <meta name="keywords" content={brand.seo.keywords.join(', ')} />
+    <link rel="canonical" href={brand.seo.canonical} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={brand.seo.canonical} />
+    <meta property="og:title" content={brand.seo.title} />
+    <meta property="og:description" content={brand.seo.description} />
+    <meta property="og:image" content={brand.seo.ogImage} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={brand.seo.canonical} />
+    <meta property="twitter:title" content={brand.seo.title} />
+    <meta property="twitter:description" content={brand.seo.description} />
+    <meta property="twitter:image" content={brand.seo.ogImage} />
+    
+    <!-- Analytics -->
+    {brand.analytics.googleAnalytics !== 'GA_MEASUREMENT_ID_PLACEHOLDER' && (
+      <>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${brand.analytics.googleAnalytics}`}
+        ></script>
+        <script
+          set:html={`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${brand.analytics.googleAnalytics}');
+          `}
+        />
+      </>
+    )}
+    {brand.analytics.bingVerification !== 'BING_VERIFICATION_CODE_PLACEHOLDER' && (
+      <meta name="msvalidate.01" content={brand.analytics.bingVerification} />
+    )}
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   </head>
 
   <body class="min-h-screen bg-base-100 text-base-content">
-    <main class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-      <nav class="navbar bg-base-100 px-0">
-        <div class="flex-1">
-          <span class="text-xl font-semibold">{brand.name}</span>
-        </div>
-        <div class="flex-none gap-2">
-          <ThemeToggle />
-          <a class="btn btn-primary">{brand.cta}</a>
-        </div>
-      </nav>
-
-      <section class="py-16">
-        <h1 class="text-[clamp(32px,6vw,56px)] font-bold leading-tight">
-          Fast promo sites with Astro + Tailwind + daisyUI
-        </h1>
-        <p class="mt-4 text-lg opacity-80">{brand.description}</p>
-      </section>
-
-      <footer class="py-10 opacity-70 text-sm">
-        © {new Date().getFullYear()} {brand.name}
-      </footer>
-
+    <main>
+      {
+        blockOrder.map((blockName) => {
+          const BlockComponent = blockMap[blockName]
+          if (BlockComponent) {
+            return <BlockComponent />
+          }
+          return null
+        })
+      }
     </main>
   </body>
 </html>

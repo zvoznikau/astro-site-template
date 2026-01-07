@@ -1,0 +1,20 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="64" cy="64" r="60" stroke="url(#gradient1)" stroke-width="2" opacity="0.3"/>
+  <circle cx="64" cy="64" r="40" stroke="url(#gradient2)" stroke-width="2" opacity="0.4"/>
+  <circle cx="64" cy="64" r="20" fill="url(#gradient3)" opacity="0.5"/>
+  <defs>
+    <linearGradient id="gradient1" x1="0" y1="0" x2="128" y2="128">
+      <stop offset="0%" stop-color="#1c4e80"/>
+      <stop offset="100%" stop-color="#3abff8"/>
+    </linearGradient>
+    <linearGradient id="gradient2" x1="0" y1="0" x2="128" y2="128">
+      <stop offset="0%" stop-color="#3abff8"/>
+      <stop offset="100%" stop-color="#36d399"/>
+    </linearGradient>
+    <linearGradient id="gradient3" x1="0" y1="0" x2="128" y2="128">
+      <stop offset="0%" stop-color="#ea6947"/>
+      <stop offset="100%" stop-color="#fbbd23"/>
+    </linearGradient>
+  </defs>
+</svg>
+

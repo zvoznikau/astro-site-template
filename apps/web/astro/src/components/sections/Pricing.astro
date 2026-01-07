@@ -1,0 +1,54 @@
+---
+import { brand } from '../../config/brand'
+---
+
+<section
+  id="pricing"
+  class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+>
+  <div class="space-y-12">
+    <div>
+      <h2 class="text-4xl sm:text-5xl font-bold mb-4">
+        Pricing
+      </h2>
+    </div>
+    <div class="space-y-8">
+      <!-- Monthly Plan -->
+      <div>
+        <div class="flex items-baseline justify-between mb-2">
+          <h3 class="text-2xl font-semibold">Monthly</h3>
+          <div class="text-3xl font-bold">{brand.pricing.monthly.price}</div>
+        </div>
+        <p class="text-base-content/70 mb-4">Per {brand.pricing.monthly.period}</p>
+        <a
+          href={brand.urls.appStore}
+          class="text-sm font-medium text-primary hover:opacity-80 transition-opacity"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {brand.cta.subscribe} →
+        </a>
+      </div>
+
+      <!-- Yearly Plan -->
+      <div>
+        <div class="flex items-baseline justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <h3 class="text-2xl font-semibold">Yearly</h3>
+            <span class="text-xs font-medium text-base-content/60">Best value</span>
+          </div>
+          <div class="text-3xl font-bold">{brand.pricing.yearly.price}</div>
+        </div>
+        <p class="text-base-content/70 mb-4">Per {brand.pricing.yearly.period}</p>
+        <a
+          href={brand.urls.appStore}
+          class="text-sm font-medium text-primary hover:opacity-80 transition-opacity"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {brand.cta.subscribe} →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

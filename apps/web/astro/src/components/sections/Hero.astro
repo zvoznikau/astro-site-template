@@ -1,0 +1,28 @@
+---
+import { brand } from '../../config/brand'
+---
+
+<section
+  id="hero"
+  class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-32 sm:py-40"
+>
+  <div class="text-center space-y-8">
+    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight text-base-content">
+      {brand.product.valueProposition}
+    </h1>
+    <p class="text-xl sm:text-2xl text-base-content/70 max-w-2xl mx-auto">
+      {brand.product.secondaryLine}
+    </p>
+    <div class="pt-4">
+      <a
+        href={brand.urls.appStore}
+        class="inline-block text-base font-medium text-primary hover:opacity-80 transition-opacity"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {brand.cta.primary} →
+      </a>
+    </div>
+  </div>
+</section>
+

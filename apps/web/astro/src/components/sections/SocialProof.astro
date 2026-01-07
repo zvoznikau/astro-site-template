@@ -1,0 +1,16 @@
+---
+import { brand } from '../../config/brand'
+---
+
+<section
+  id="social-proof"
+  class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+>
+  <div class="space-y-4 text-center">
+    {brand.socialProof.map((proof) => (
+      <p class="text-lg text-base-content/70">
+        {proof.title}. {proof.description}
+      </p>
+    ))}
+  </div>
+</section>
