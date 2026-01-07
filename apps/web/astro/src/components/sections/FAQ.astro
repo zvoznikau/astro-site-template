@@ -18,11 +18,12 @@ import { brand } from '../../config/brand'
     <div class="max-w-3xl mx-auto">
       <div class="space-y-4" id="faq-container">
         {brand.faq.map((item, index) => (
-          <div class="faq-item rounded-xl overflow-hidden card-block backdrop-blur-md shadow-xl hover:shadow-2xl transition-all" data-faq-index={index}>
+          <div class="faq-item rounded-xl overflow-hidden card-block backdrop-blur-md shadow-xl hover:shadow-2xl transition-all" data-faq-item={index}>
             <button
               type="button"
               class="faq-button flex items-center justify-between w-full px-6 py-5 cursor-pointer hover:bg-base-content/10 transition-colors text-left"
-              aria-expanded={index === 0 ? 'true' : 'false'}
+              data-faq-button={index}
+              aria-expanded="false"
             >
               <span class="text-lg font-semibold text-base-content pr-4">{item.question}</span>
               <svg
@@ -34,7 +35,7 @@ import { brand } from '../../config/brand'
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            <div class={`faq-content overflow-hidden transition-all duration-300 ease-in-out ${index === 0 ? 'faq-open' : ''}`}>
+            <div class="faq-content" data-faq-content={index}>
               <div class="px-6 pb-5">
                 <p class="text-base text-base-content/70 leading-relaxed">{item.answer}</p>
               </div>
@@ -47,61 +48,104 @@ import { brand } from '../../config/brand'
 </section>
 
 <style>
+  /* FAQ Content - hidden by default */
   .faq-content {
-    max-height: 0;
+    display: none;
+    overflow: hidden;
   }
   
-  .faq-content.faq-open {
-    max-height: 1000px;
+  /* FAQ Content - visible ONLY when parent has active class */
+  .faq-item.active .faq-content {
+    display: block;
   }
   
+  /* Force hide content if parent is not active */
+  .faq-item:not(.active) .faq-content {
+    display: none !important;
+  }
+  
+  /* Arrow rotation when active */
   .faq-item.active .faq-arrow {
     transform: rotate(180deg);
   }
 </style>
 
-<script>
-  (function() {
-    // Initialize FAQ accordion
-    function initFAQ() {
-      const faqItems = document.querySelectorAll('.faq-item');
-      const faqButtons = document.querySelectorAll('.faq-button');
-      const faqContents = document.querySelectorAll('.faq-content');
-      
-      // Open first item by default
-      if (faqItems.length > 0) {
-        faqItems[0].classList.add('active');
-        faqContents[0].classList.add('faq-open');
-        faqButtons[0].setAttribute('aria-expanded', 'true');
-      }
-      
-      // Add click handlers
-      faqButtons.forEach((button, index) => {
-        button.addEventListener('click', function() {
-          const isOpen = faqItems[index].classList.contains('active');
-          
-          // Close all items
-          faqItems.forEach((item, i) => {
-            item.classList.remove('active');
-            faqContents[i].classList.remove('faq-open');
-            faqButtons[i].setAttribute('aria-expanded', 'false');
-          });
-          
-          // If clicked item was closed, open it
-          if (!isOpen) {
-            faqItems[index].classList.add('active');
-            faqContents[index].classList.add('faq-open');
-            faqButtons[index].setAttribute('aria-expanded', 'true');
-          }
-        });
-      });
+<script is:inline>
+  // FAQ Accordion - Event delegation approach
+  function initFAQ() {
+    var container = document.getElementById('faq-container');
+    if (!container) {
+      setTimeout(initFAQ, 100);
+      return;
     }
     
-    // Run on page load
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initFAQ);
-    } else {
-      initFAQ();
+    // CRITICAL: Close ALL items first
+    var allItems = container.querySelectorAll('[data-faq-item]');
+    for (var k = 0; k < allItems.length; k++) {
+      allItems[k].classList.remove('active');
+      var btn = allItems[k].querySelector('[data-faq-button]');
+      if (btn) {
+        btn.setAttribute('aria-expanded', 'false');
+      }
     }
-  })();
+    
+    // Open first item by default
+    var firstItem = container.querySelector('[data-faq-item="0"]');
+    if (firstItem) {
+      firstItem.classList.add('active');
+      var firstButton = firstItem.querySelector('[data-faq-button="0"]');
+      if (firstButton) {
+        firstButton.setAttribute('aria-expanded', 'true');
+      }
+    }
+    
+    // Event delegation - one handler for all buttons
+    container.addEventListener('click', function(e) {
+      var target = e.target;
+      // Find the button that was clicked
+      while (target && !target.hasAttribute('data-faq-button')) {
+        target = target.parentElement;
+        if (!target || target === container) return;
+      }
+      
+      if (!target) return;
+      
+      e.preventDefault();
+      e.stopPropagation();
+      
+      var buttonIndex = target.getAttribute('data-faq-button');
+      var currentItem = container.querySelector('[data-faq-item="' + buttonIndex + '"]');
+      if (!currentItem) return;
+      
+      var isOpen = currentItem.classList.contains('active');
+      
+      // Close ALL items first
+      var allItems = container.querySelectorAll('[data-faq-item]');
+      for (var j = 0; j < allItems.length; j++) {
+        allItems[j].classList.remove('active');
+        var btnItem = allItems[j].querySelector('[data-faq-button]');
+        if (btnItem) {
+          btnItem.setAttribute('aria-expanded', 'false');
+        }
+      }
+      
+      // If clicked item was closed, open it
+      if (!isOpen) {
+        currentItem.classList.add('active');
+        target.setAttribute('aria-expanded', 'true');
+      }
+    });
+  }
+  
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFAQ);
+  } else {
+    initFAQ();
+  }
+  
+  // Fallback
+  window.addEventListener('load', function() {
+    setTimeout(initFAQ, 50);
+  });
 </script>
