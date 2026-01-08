@@ -110,13 +110,15 @@ body {
   --er: 0 84% 60%;
 }
 
-/* Force text-base-content to use CSS variable for proper inversion */
+/* Force text-base-content to use CSS variable for proper theme switching */
+/* Light theme - dark text */
 [data-theme='light'] .text-base-content,
 [data-theme='light'] .text-base-content\/80,
 [data-theme='light'] .text-base-content\/70,
 [data-theme='light'] .text-base-content\/60,
 [data-theme='light'] .text-base-content\/50,
-[data-theme='light'] .text-base-content\/30 {
+[data-theme='light'] .text-base-content\/30,
+[data-theme='light'] .text-base-content\/75 {
   color: hsl(var(--bc));
 }
 
@@ -141,6 +143,42 @@ body {
 }
 
 [data-theme='light'] .text-base-content\/30 {
+  color: hsl(var(--bc) / 0.3);
+}
+
+/* Dark theme - light text */
+[data-theme='dark'] .text-base-content,
+html:not([data-theme]) .text-base-content {
+  color: hsl(var(--bc));
+}
+
+[data-theme='dark'] .text-base-content\/80,
+html:not([data-theme]) .text-base-content\/80 {
+  color: hsl(var(--bc) / 0.8);
+}
+
+[data-theme='dark'] .text-base-content\/70,
+html:not([data-theme]) .text-base-content\/70 {
+  color: hsl(var(--bc) / 0.7);
+}
+
+[data-theme='dark'] .text-base-content\/60,
+html:not([data-theme]) .text-base-content\/60 {
+  color: hsl(var(--bc) / 0.6);
+}
+
+[data-theme='dark'] .text-base-content\/50,
+html:not([data-theme]) .text-base-content\/50 {
+  color: hsl(var(--bc) / 0.5);
+}
+
+[data-theme='dark'] .text-base-content\/75,
+html:not([data-theme]) .text-base-content\/75 {
+  color: hsl(var(--bc) / 0.75);
+}
+
+[data-theme='dark'] .text-base-content\/30,
+html:not([data-theme]) .text-base-content\/30 {
   color: hsl(var(--bc) / 0.3);
 }
 
