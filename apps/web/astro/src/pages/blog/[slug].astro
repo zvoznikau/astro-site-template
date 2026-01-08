@@ -1,0 +1,249 @@
+---
+import '../../styles/global.css'
+import { brand } from '../../config/brand'
+import { getPostBySlug, getAllPosts } from '../../config/blog'
+import Header from '../../components/sections/Header.astro'
+import Footer from '../../components/sections/Footer.astro'
+
+export async function getStaticPaths() {
+  const posts = getAllPosts()
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }))
+}
+
+const { slug } = Astro.params
+const post = getPostBySlug(slug!)
+
+if (!post) {
+  return Astro.redirect('/blog')
+}
+
+// Generate JSON-LD for SEO
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.seo.title,
+  description: post.seo.description,
+  datePublished: post.date,
+  author: {
+    '@type': 'Person',
+    name: post.author.name,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: brand.name,
+  },
+}
+---
+
+<html lang="en" data-theme={brand.theme.default} class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta name="theme-color" content="#581c87" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#581c87" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#581c87" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
+    <script is:inline>
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'light' || savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    
+    <title>{post.seo.title} - {brand.name}</title>
+    <meta name="description" content={post.seo.description} />
+    <meta name="keywords" content={post.seo.keywords.join(', ')} />
+    <link rel="canonical" href={`${brand.seo.canonical}/blog/${post.slug}`} />
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={`${brand.seo.canonical}/blog/${post.slug}`} />
+    <meta property="og:title" content={post.seo.title} />
+    <meta property="og:description" content={post.seo.description} />
+    <meta property="og:image" content={brand.seo.ogImage} />
+    
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={`${brand.seo.canonical}/blog/${post.slug}`} />
+    <meta property="twitter:title" content={post.seo.title} />
+    <meta property="twitter:description" content={post.seo.description} />
+    <meta property="twitter:image" content={brand.seo.ogImage} />
+    
+    <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white antialiased bg-fixed overflow-x-hidden">
+    <Header />
+    
+    <main class="relative overflow-x-hidden pt-20">
+      <article class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+        <!-- Back to blog link -->
+        <div class="mb-8">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 text-base-content/70 hover:text-base-content transition-colors"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            <span>Back to blog</span>
+          </a>
+        </div>
+        
+        <!-- Article header -->
+        <header class="mb-12">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+            <div class="text-sm text-base-content/60">
+              {new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </div>
+            <div class="text-sm text-base-content/60">
+              By <span class="font-medium text-base-content">{post.author.name}</span>
+            </div>
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            <span class="gradient-text">{post.title}</span>
+          </h1>
+          <p class="text-xl text-base-content/80 leading-relaxed">
+            {post.description}
+          </p>
+        </header>
+        
+        <!-- Article content -->
+        <div
+          class="prose prose-invert prose-lg max-w-none
+            prose-headings:text-base-content prose-headings:font-bold
+            prose-p:text-base-content/80 prose-p:leading-relaxed
+            prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+            prose-strong:text-base-content prose-strong:font-bold
+            prose-ul:text-base-content/80 prose-ol:text-base-content/80
+            prose-li:text-base-content/80
+            prose-code:text-primary prose-code:bg-base-300 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+            prose-blockquote:border-l-primary prose-blockquote:text-base-content/70"
+          set:html={post.content}
+        />
+        
+        <!-- Back to blog link at bottom -->
+        <div class="mt-12 pt-8">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all font-medium"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            <span>Back to blog</span>
+          </a>
+        </div>
+      </article>
+    </main>
+    
+    <Footer />
+  </body>
+</html>
+
+<style>
+  /* Invert text colors in light theme */
+  [data-theme='light'] article {
+    color: hsl(0 0% 98%);
+  }
+  
+  [data-theme='light'] article .text-base-content,
+  [data-theme='light'] article .text-base-content\/80,
+  [data-theme='light'] article .text-base-content\/70,
+  [data-theme='light'] article .text-base-content\/60 {
+    color: hsl(0 0% 98%);
+  }
+  
+  [data-theme='light'] article .text-base-content\/80 {
+    color: hsl(0 0% 98% / 0.8);
+  }
+  
+  [data-theme='light'] article .text-base-content\/70 {
+    color: hsl(0 0% 98% / 0.7);
+  }
+  
+  [data-theme='light'] article .text-base-content\/60 {
+    color: hsl(0 0% 98% / 0.6);
+  }
+  
+  /* Custom styles for markdown content */
+  .prose h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+  
+  .prose h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+  }
+  
+  .prose p {
+    margin-bottom: 1.25rem;
+  }
+  
+  .prose ul,
+  .prose ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+  
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .prose blockquote {
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    border-left-width: 4px;
+  }
+  
+  .prose code {
+    font-size: 0.9em;
+  }
+  
+  .prose pre {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+  
+  [data-theme='light'] .prose pre {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+</style>
+

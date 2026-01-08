@@ -1,0 +1,132 @@
+---
+import '../../styles/global.css'
+import { brand } from '../../config/brand'
+import { getAllPosts } from '../../config/blog'
+import Header from '../../components/sections/Header.astro'
+import Footer from '../../components/sections/Footer.astro'
+
+const allPosts = getAllPosts()
+
+// Generate JSON-LD for SEO
+const blogJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: `${brand.name} Blog`,
+  description: 'Latest news and updates about DemoAPPmax',
+  url: `${brand.seo.canonical}/blog`,
+}
+---
+
+<html lang="en" data-theme={brand.theme.default} class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta name="theme-color" content="#581c87" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#581c87" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#581c87" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
+    <script is:inline>
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'light' || savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    
+    <title>Blog - {brand.name}</title>
+    <meta name="description" content="Latest news and updates about DemoAPPmax - server monitoring application" />
+    <meta name="keywords" content={['blog', 'news', 'updates', ...brand.seo.keywords].join(', ')} />
+    <link rel="canonical" href={`${brand.seo.canonical}/blog`} />
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`${brand.seo.canonical}/blog`} />
+    <meta property="og:title" content={`Blog - ${brand.name}`} />
+    <meta property="og:description" content="Latest news and updates about DemoAPPmax" />
+    <meta property="og:image" content={brand.seo.ogImage} />
+    
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={`${brand.seo.canonical}/blog`} />
+    <meta property="twitter:title" content={`Blog - ${brand.name}`} />
+    <meta property="twitter:description" content="Latest news and updates about DemoAPPmax" />
+    <meta property="twitter:image" content={brand.seo.ogImage} />
+    
+    <script type="application/ld+json" set:html={JSON.stringify(blogJsonLd)} />
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white antialiased bg-fixed overflow-x-hidden">
+    <Header />
+    
+    <main class="relative overflow-x-hidden pt-20">
+      <section class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+        <div class="space-y-12">
+          <div class="text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+              <span class="gradient-text">Blog</span>
+            </h1>
+            <p class="text-xl text-base-content/80 max-w-2xl mx-auto">
+              Latest news, updates, and stories about DemoAPPmax
+            </p>
+          </div>
+          
+          <!-- Blog posts grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {allPosts.map((post) => (
+              <a
+                href={`/blog/${post.slug}`}
+                class="group p-6 rounded-xl card-block transition-all shadow-xl hover:shadow-2xl flex flex-col h-full hover:scale-[1.02]"
+              >
+                <div class="flex flex-col h-full">
+                  <!-- Date -->
+                  <div class="text-sm text-base-content/60 mb-3">
+                    {new Date(post.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </div>
+                  
+                  <!-- Title -->
+                  <h2 class="text-xl font-bold text-base-content mb-3 group-hover:text-primary transition-colors">
+                    {post.title}
+                  </h2>
+                  
+                  <!-- Description -->
+                  <p class="text-base text-base-content/70 leading-relaxed flex-grow mb-4">
+                    {post.description}
+                  </p>
+                  
+                  <!-- Read more -->
+                  <div class="flex items-center text-primary font-medium group-hover:gap-2 transition-all">
+                    <span>Read more</span>
+                    <svg
+                      class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <Footer />
+  </body>
+</html>
+

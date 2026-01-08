@@ -210,6 +210,7 @@ export const brand = {
         'Pricing',
         'FAQ',
         'CTABand',
+        'LatestNews', // Blog section before footer for SEO
         'Footer',
       ],
     },
