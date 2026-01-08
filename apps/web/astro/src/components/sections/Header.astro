@@ -4,7 +4,7 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
 import AppStoreBadge from '../ui/AppStoreBadge.astro'
 ---
 
-<header id="main-header" class="fixed top-0 left-0 right-0 z-[9999] bg-base-100/80 backdrop-blur-md">
+<header id="main-header" class="fixed top-0 left-0 right-0 z-[9999] bg-base-100/90">
   <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
     <div class="flex items-center justify-between">
       <!-- Logo -->
@@ -59,10 +59,10 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
 <!-- Mobile menu - outside header to blur content properly -->
 <div id="mobile-menu" class="lg:hidden fixed inset-0 z-[10000] hidden">
   <!-- Overlay - blurs content below header, not the header itself -->
-  <div id="menu-overlay" class="absolute top-[72px] left-0 right-0 bottom-0 bg-black/50 backdrop-blur-sm z-[1]"></div>
+  <div id="menu-overlay" class="absolute top-[72px] left-0 right-0 bottom-0 bg-black/50 z-[1]"></div>
     
     <!-- Menu panel - above everything including header -->
-    <div id="menu-panel" class="absolute top-0 right-0 h-full w-80 shadow-2xl flex flex-col z-[10001]" style="background-color: hsl(var(--b1) / 0.6); backdrop-blur-md;">
+    <div id="menu-panel" class="absolute top-0 right-0 h-full w-80 shadow-2xl flex flex-col z-[10001]" style="background-color: hsl(var(--b1) / 0.95);">
       <!-- Header with close button -->
       <div class="flex items-center justify-end p-4 flex-shrink-0">
         <button id="close-menu-btn" class="p-2 text-base-content/70 hover:text-base-content">
@@ -236,55 +236,44 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
     });
   })();
   
-  // Header shadow on scroll with smooth transition near top
+  // Optimized scroll handlers with throttling
   (function() {
     const header = document.getElementById('main-header');
+    const menuItems = document.querySelectorAll('.desktop-menu-item[data-section]');
+    
     if (!header) return;
     
-    const threshold = window.innerHeight; // Distance from top where shadow starts fading (1 viewport height)
+    const threshold = window.innerHeight;
+    let ticking = false;
+    let lastScrollY = window.scrollY;
     
-    function updateHeaderShadow() {
-      const scrollY = window.scrollY;
-      
+    // Prepare sections for menu highlighting
+    let sections = [];
+    if (menuItems.length > 0) {
+      sections = Array.from(menuItems).map(item => {
+        const sectionId = item.getAttribute('data-section');
+        const section = document.getElementById(sectionId);
+        return { item, section, id: sectionId };
+      }).filter(({ section }) => section !== null);
+    }
+    
+    function updateHeaderShadow(scrollY) {
       if (scrollY === 0) {
         header.style.boxShadow = 'none';
       } else if (scrollY < threshold) {
-        // Fade shadow as we approach top
         const opacity = scrollY / threshold;
-        const shadowIntensity = opacity * 0.25; // Adjust shadow strength
+        const shadowIntensity = opacity * 0.25;
         header.style.boxShadow = `0 10px 15px -3px rgba(0, 0, 0, ${shadowIntensity}), 0 4px 6px -2px rgba(0, 0, 0, ${shadowIntensity * 0.5})`;
       } else {
-        // Full shadow when scrolled past threshold
         header.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
       }
     }
     
-    // Initial check
-    updateHeaderShadow();
-    
-    // Update on scroll
-    window.addEventListener('scroll', updateHeaderShadow, { passive: true });
-  })();
-  
-  // Active menu item highlighting based on scroll position
-  (function() {
-    const menuItems = document.querySelectorAll('.desktop-menu-item[data-section]');
-    if (menuItems.length === 0) return;
-    
-    const sections = Array.from(menuItems).map(item => {
-      const sectionId = item.getAttribute('data-section');
-      const section = document.getElementById(sectionId);
-      return { item, section, id: sectionId };
-    }).filter(({ section }) => section !== null);
-    
-    if (sections.length === 0) return;
-    
-    function updateActiveMenuItem() {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const headerHeight = 72; // Header height
+    function updateActiveMenuItem(scrollY) {
+      if (sections.length === 0) return;
       
-      // Find the section currently in view
+      const windowHeight = window.innerHeight;
+      const headerHeight = 72;
       let activeSection = null;
       let maxVisible = 0;
       
@@ -293,20 +282,17 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
         const sectionTop = rect.top + scrollY;
         const sectionHeight = rect.height;
         
-        // Calculate how much of the section is visible
         const visibleTop = Math.max(0, scrollY + headerHeight - sectionTop);
         const visibleBottom = Math.min(sectionHeight, scrollY + windowHeight - sectionTop);
         const visibleHeight = Math.max(0, visibleBottom - visibleTop);
         const visiblePercent = visibleHeight / sectionHeight;
         
-        // Section is active if it's in viewport and has the most visibility
         if (rect.top <= headerHeight + 100 && rect.bottom >= headerHeight && visiblePercent > maxVisible) {
           maxVisible = visiblePercent;
           activeSection = id;
         }
       });
       
-      // Update menu items
       menuItems.forEach(item => {
         const sectionId = item.getAttribute('data-section');
         if (sectionId === activeSection) {
@@ -317,16 +303,37 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
       });
     }
     
-    // Update on scroll
-    window.addEventListener('scroll', updateActiveMenuItem, { passive: true });
+    function handleScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          
+          // Only update if scroll position changed significantly (performance optimization)
+          if (Math.abs(scrollY - lastScrollY) > 5) {
+            updateHeaderShadow(scrollY);
+            updateActiveMenuItem(scrollY);
+            lastScrollY = scrollY;
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
     
     // Initial check
-    updateActiveMenuItem();
+    updateHeaderShadow(window.scrollY);
+    updateActiveMenuItem(window.scrollY);
     
-    // Also check on hash change (when clicking menu links)
-    window.addEventListener('hashchange', () => {
-      setTimeout(updateActiveMenuItem, 100);
-    });
+    // Single scroll listener with throttling
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Also check on hash change
+    if (menuItems.length > 0) {
+      window.addEventListener('hashchange', () => {
+        setTimeout(() => updateActiveMenuItem(window.scrollY), 100);
+      });
+    }
   })();
 </script>
 
@@ -341,8 +348,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
   
   #menu-panel {
     transform: translateX(100%);
-    background-color: hsl(var(--b1) / 0.6) !important;
-    backdrop-filter: blur(12px);
+    background-color: hsl(var(--b1) / 0.95) !important;
     position: absolute;
     top: 0;
     right: 0;
@@ -351,12 +357,13 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
     max-height: 100vh;
     z-index: 10001 !important;
     transition: transform 0.3s ease-out;
+    will-change: transform;
   }
   
   #menu-overlay {
     z-index: 1 !important;
     opacity: 0;
-    transition: opacity 0.3s ease-out, backdrop-filter 0.3s ease-out;
+    transition: opacity 0.3s ease-out;
   }
   
   #main-header {

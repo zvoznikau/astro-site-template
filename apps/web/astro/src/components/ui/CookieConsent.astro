@@ -3,7 +3,7 @@
 
 <div id="cookie-consent" class="hidden fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6">
   <div class="max-w-screen-xl mx-auto">
-    <div class="bg-base-100/50 backdrop-blur-md border border-base-content/20 rounded-2xl shadow-2xl p-6 sm:p-8">
+    <div class="bg-base-100/90 border border-base-content/20 rounded-2xl shadow-2xl p-6 sm:p-8">
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
         <div class="flex-1">
           <h3 class="text-lg font-bold text-base-content mb-2">Cookie Consent</h3>
@@ -185,42 +185,59 @@
       }
     } else {
       // On main page, show/hide when scrolling
-      let scrollTimeout = null;
+      let ticking = false;
       let isAnimating = false;
+      let lastScrollY = window.scrollY;
       
       function handleScroll() {
-        // Debounce scroll events
-        if (scrollTimeout) {
-          clearTimeout(scrollTimeout);
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            // If user already gave consent, don't show banner
+            if (hasConsent()) {
+              ticking = false;
+              return;
+            }
+            
+            // Don't toggle if animation is in progress
+            if (isAnimating) {
+              ticking = false;
+              return;
+            }
+            
+            const scrollY = window.scrollY;
+            
+            // Only check if scroll position changed significantly (performance optimization)
+            if (Math.abs(scrollY - lastScrollY) < 10) {
+              ticking = false;
+              return;
+            }
+            
+            lastScrollY = scrollY;
+            
+            // Show banner after scrolling at least 50% of viewport height
+            // Hide when scrolling back to 30% (hysteresis to prevent flickering)
+            const showThreshold = window.innerHeight * 0.5;
+            const hideThreshold = window.innerHeight * 0.3;
+            
+            if (scrollY > showThreshold && !bannerShown) {
+              isAnimating = true;
+              showBanner();
+              setTimeout(() => {
+                isAnimating = false;
+              }, 300);
+            } else if (scrollY <= hideThreshold && bannerShown) {
+              isAnimating = true;
+              hideBanner();
+              bannerShown = false;
+              setTimeout(() => {
+                isAnimating = false;
+              }, 300);
+            }
+            
+            ticking = false;
+          });
+          ticking = true;
         }
-        
-        scrollTimeout = setTimeout(() => {
-          // If user already gave consent, don't show banner
-          if (hasConsent()) return;
-          
-          // Don't toggle if animation is in progress
-          if (isAnimating) return;
-          
-          // Show banner after scrolling at least 50% of viewport height
-          // Hide when scrolling back to 30% (hysteresis to prevent flickering)
-          const showThreshold = window.innerHeight * 0.5;
-          const hideThreshold = window.innerHeight * 0.3;
-          
-          if (window.scrollY > showThreshold && !bannerShown) {
-            isAnimating = true;
-            showBanner();
-            setTimeout(() => {
-              isAnimating = false;
-            }, 300);
-          } else if (window.scrollY <= hideThreshold && bannerShown) {
-            isAnimating = true;
-            hideBanner();
-            bannerShown = false; // Reset flag to allow showing again
-            setTimeout(() => {
-              isAnimating = false;
-            }, 300);
-          }
-        }, 50); // Debounce delay
       }
       
       if (document.readyState === 'loading') {

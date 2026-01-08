@@ -27,6 +27,38 @@ html {
   background-size: cover;
 }
 
+/* Performance optimizations for Chrome */
+/* Use contain for layout isolation */
+.card-block,
+.pricing-card {
+  contain: layout style paint;
+}
+
+/* Reduce backdrop-blur intensity for better performance */
+[class*="backdrop-blur-md"] {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+[class*="backdrop-blur-sm"] {
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+/* Optimize header - use GPU acceleration */
+#main-header {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Optimize fixed elements */
+#mobile-menu,
+#menu-panel,
+#menu-overlay {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
 /* Dark theme: dark background - covers full page */
 html[data-theme='dark'],
 html:not([data-theme]) {

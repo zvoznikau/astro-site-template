@@ -14,7 +14,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
   class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32"
 >
           <!-- Background overlay to separate from main background -->
-          <div class="absolute top-0 bottom-0 bg-gradient-to-br from-white/60 via-white/50 to-white/60 rounded-3xl backdrop-blur-sm pricing-bg-overlay" style="left: calc(-1 * 1rem); right: calc(-1 * 1rem);"></div>
+          <div class="absolute top-0 bottom-0 bg-gradient-to-br from-white/70 via-white/60 to-white/70 rounded-3xl pricing-bg-overlay" style="left: calc(-1 * 1rem); right: calc(-1 * 1rem);"></div>
   <div class="relative z-10 space-y-20">
     <div class="text-center">
       <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
@@ -28,7 +28,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
     <!-- Two columns: Monthly | Yearly -->
     <div id="pricing-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
       <!-- Monthly Plan -->
-      <div class="pricing-card p-6 sm:p-8 rounded-2xl card-block backdrop-blur-md transition-all shadow-xl hover:scale-[1.02] hover:shadow-2xl flex flex-col">
+      <div class="pricing-card p-6 sm:p-8 rounded-2xl card-block transition-all shadow-xl hover:scale-[1.02] hover:shadow-2xl flex flex-col">
         <div class="space-y-6 flex-grow flex flex-col">
           <div>
             <h3 class="text-2xl font-bold text-base-content mb-2 pricing-title">Monthly</h3>
@@ -50,13 +50,13 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
       </div>
 
       <!-- Yearly Plan (highlighted - premium, attractive) -->
-      <div class="pricing-card pricing-card-featured p-6 sm:p-8 rounded-2xl card-block backdrop-blur-md text-base-content relative overflow-hidden hover:scale-[1.02] transition-all group shadow-2xl hover:shadow-2xl flex flex-col">
+      <div class="pricing-card pricing-card-featured p-6 sm:p-8 rounded-2xl card-block text-base-content relative overflow-hidden hover:scale-[1.02] transition-all group shadow-2xl hover:shadow-2xl flex flex-col">
         <!-- Animated pulsing glow -->
         <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-teal-500/15 to-cyan-500/15 animate-pulse-slow"></div>
         <!-- Shine effect -->
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-base-content/1 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         <div class="absolute top-4 right-4">
-          <span class="px-3 py-1 text-xs font-bold rounded-full backdrop-blur-sm animate-bounce-subtle shadow-md best-value-badge">Best value</span>
+          <span class="px-3 py-1 text-xs font-bold rounded-full animate-bounce-subtle shadow-md best-value-badge">Best value</span>
         </div>
         <div class="space-y-6 relative z-10 flex-grow flex flex-col">
           <div>
