@@ -22,6 +22,21 @@ import { brand } from '../../config/brand'
       <div class="hidden md:block absolute top-24 h-1 bg-gradient-to-r from-purple-400/60 via-purple-500/80 to-purple-400/60 rounded-full connecting-line overflow-visible" style="left: calc(16.67% - 0.5px); width: calc(66.66% + 1px);">
         <!-- Animated spark/charge moving along the line -->
         <div class="spark-dot"></div>
+        <!-- Explosion effect at the end -->
+        <div class="explosion">
+          <div class="explosion-particle particle-1"></div>
+          <div class="explosion-particle particle-2"></div>
+          <div class="explosion-particle particle-3"></div>
+          <div class="explosion-particle particle-4"></div>
+          <div class="explosion-particle particle-5"></div>
+          <div class="explosion-particle particle-6"></div>
+          <div class="explosion-particle particle-7"></div>
+          <div class="explosion-particle particle-8"></div>
+          <div class="explosion-particle particle-9"></div>
+          <div class="explosion-particle particle-10"></div>
+          <div class="explosion-particle particle-11"></div>
+          <div class="explosion-particle particle-12"></div>
+        </div>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
@@ -52,6 +67,10 @@ import { brand } from '../../config/brand'
     5% {
       opacity: 1;
     }
+    90% {
+      opacity: 1;
+      left: calc(100% - 6px);
+    }
     95% {
       opacity: 1;
       left: calc(100% - 6px);
@@ -63,11 +82,32 @@ import { brand } from '../../config/brand'
   }
   
   @keyframes spark-glow {
-    0%, 100% {
+    0%, 80% {
       box-shadow: 0 0 8px rgba(168, 85, 247, 0.8), 0 0 16px rgba(168, 85, 247, 0.6);
     }
-    50% {
+    90% {
+      box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(196, 181, 253, 1), 0 0 60px rgba(168, 85, 247, 0.9);
+    }
+    95% {
+      box-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 60px rgba(255, 255, 255, 0.8), 0 0 90px rgba(196, 181, 253, 0.9);
+    }
+    100% {
       box-shadow: 0 0 16px rgba(168, 85, 247, 1), 0 0 32px rgba(168, 85, 247, 0.8), 0 0 48px rgba(168, 85, 247, 0.4);
+    }
+  }
+  
+  @keyframes spark-color {
+    0%, 80% {
+      background: linear-gradient(135deg, rgba(196, 181, 253, 1), rgba(168, 85, 247, 1));
+    }
+    90% {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(196, 181, 253, 1), rgba(168, 85, 247, 1));
+    }
+    95% {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9), rgba(196, 181, 253, 1));
+    }
+    100% {
+      background: linear-gradient(135deg, rgba(196, 181, 253, 1), rgba(168, 85, 247, 1));
     }
   }
   
@@ -84,6 +124,279 @@ import { brand } from '../../config/brand'
     height: 12px;
     background: linear-gradient(135deg, rgba(196, 181, 253, 1), rgba(168, 85, 247, 1));
     border-radius: 50%;
-    animation: spark-move 3s ease-in-out infinite, spark-glow 1.5s ease-in-out infinite;
+    animation: spark-move 3s ease-in-out infinite, spark-glow 3s ease-in-out infinite, spark-color 3s ease-in-out infinite;
+  }
+  
+  @keyframes explosion {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    92% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    93% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    97% {
+      opacity: 0.8;
+      transform: scale(1.08);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(2.4);
+    }
+  }
+  
+  @keyframes particle-explode-1 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(48px, -36px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-2 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-48px, -36px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-3 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(36px, 48px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-4 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-36px, 48px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-5 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(60px, 0) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-6 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-60px, 0) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-7 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(42px, -25px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-8 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-42px, -25px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-9 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(25px, 42px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-10 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-25px, 42px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-11 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(0, -50px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-12 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(0, 50px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  .explosion {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    animation: explosion 3s ease-in-out infinite;
+  }
+  
+  .explosion-particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(196, 181, 253, 1), rgba(168, 85, 247, 1));
+    border-radius: 50%;
+    box-shadow: 0 0 16px rgba(168, 85, 247, 1), 0 0 32px rgba(196, 181, 253, 0.8), 0 0 48px rgba(168, 85, 247, 0.6);
+    filter: blur(1px);
+    top: 0;
+    left: 0;
+  }
+  
+  .particle-1 {
+    animation: particle-explode-1 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-2 {
+    animation: particle-explode-2 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-3 {
+    animation: particle-explode-3 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-4 {
+    animation: particle-explode-4 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-5 {
+    animation: particle-explode-5 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-6 {
+    animation: particle-explode-6 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-7 {
+    animation: particle-explode-7 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-8 {
+    animation: particle-explode-8 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-9 {
+    animation: particle-explode-9 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-10 {
+    animation: particle-explode-10 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-11 {
+    animation: particle-explode-11 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-12 {
+    animation: particle-explode-12 0.5s ease-out infinite;
+    animation-delay: 2.79s;
   }
 </style>
