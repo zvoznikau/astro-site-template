@@ -52,12 +52,12 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
 </header>
 
 <!-- Mobile menu - outside header to blur content properly -->
-<div id="mobile-menu" class="lg:hidden fixed inset-0 z-[102] hidden">
-  <!-- Overlay - blurs entire page content -->
-  <div id="menu-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+<div id="mobile-menu" class="lg:hidden fixed inset-0 z-[10000] hidden">
+  <!-- Overlay - blurs content below header, not the header itself -->
+  <div id="menu-overlay" class="absolute top-[72px] left-0 right-0 bottom-0 bg-black/50 backdrop-blur-sm z-[1]"></div>
     
-    <!-- Menu panel -->
-    <div id="menu-panel" class="absolute top-0 right-0 h-full w-80 shadow-2xl flex flex-col" style="background-color: hsl(var(--b1) / 0.6); backdrop-blur-md;">
+    <!-- Menu panel - above everything including header -->
+    <div id="menu-panel" class="absolute top-0 right-0 h-full w-80 shadow-2xl flex flex-col z-[10001]" style="background-color: hsl(var(--b1) / 0.6); backdrop-blur-md;">
       <!-- Header with close button -->
       <div class="flex items-center justify-end p-4 flex-shrink-0">
         <button id="close-menu-btn" class="p-2 text-base-content/70 hover:text-base-content">
@@ -259,14 +259,11 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
     height: 100vh;
     width: 20rem;
     max-height: 100vh;
-    z-index: 10;
+    z-index: 10001 !important;
   }
   
   #menu-overlay {
-    z-index: 1;
-  }
-  
-  #menu-overlay {
+    z-index: 1 !important;
     opacity: 0;
   }
   
