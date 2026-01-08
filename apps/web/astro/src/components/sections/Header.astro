@@ -15,16 +15,21 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
       <div class="flex items-center gap-8">
         <!-- Desktop menu -->
         <div class="hidden lg:flex items-center gap-8">
-          {brand.navigation.items.map((item) => (
-            <a
-              href={item.href}
-              class="text-sm font-medium text-base-content/70 hover:text-base-content transition-colors"
-              target={item.external ? '_blank' : undefined}
-              rel={item.external ? 'noopener noreferrer' : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
+          {brand.navigation.items.map((item) => {
+            // Extract section ID from href (e.g., /#features -> features)
+            const sectionId = item.href.replace(/^\/?#/, '');
+            return (
+              <a
+                href={item.href}
+                class="desktop-menu-item text-sm font-medium text-base-content/70 hover:text-base-content transition-all duration-200 relative"
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener noreferrer' : undefined}
+                data-section={sectionId}
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </div>
         
         <!-- Desktop: Theme toggle and App Store badge -->
@@ -260,6 +265,69 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
     // Update on scroll
     window.addEventListener('scroll', updateHeaderShadow, { passive: true });
   })();
+  
+  // Active menu item highlighting based on scroll position
+  (function() {
+    const menuItems = document.querySelectorAll('.desktop-menu-item[data-section]');
+    if (menuItems.length === 0) return;
+    
+    const sections = Array.from(menuItems).map(item => {
+      const sectionId = item.getAttribute('data-section');
+      const section = document.getElementById(sectionId);
+      return { item, section, id: sectionId };
+    }).filter(({ section }) => section !== null);
+    
+    if (sections.length === 0) return;
+    
+    function updateActiveMenuItem() {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const headerHeight = 72; // Header height
+      
+      // Find the section currently in view
+      let activeSection = null;
+      let maxVisible = 0;
+      
+      sections.forEach(({ section, id }) => {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top + scrollY;
+        const sectionHeight = rect.height;
+        
+        // Calculate how much of the section is visible
+        const visibleTop = Math.max(0, scrollY + headerHeight - sectionTop);
+        const visibleBottom = Math.min(sectionHeight, scrollY + windowHeight - sectionTop);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+        const visiblePercent = visibleHeight / sectionHeight;
+        
+        // Section is active if it's in viewport and has the most visibility
+        if (rect.top <= headerHeight + 100 && rect.bottom >= headerHeight && visiblePercent > maxVisible) {
+          maxVisible = visiblePercent;
+          activeSection = id;
+        }
+      });
+      
+      // Update menu items
+      menuItems.forEach(item => {
+        const sectionId = item.getAttribute('data-section');
+        if (sectionId === activeSection) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }
+    
+    // Update on scroll
+    window.addEventListener('scroll', updateActiveMenuItem, { passive: true });
+    
+    // Initial check
+    updateActiveMenuItem();
+    
+    // Also check on hash change (when clicking menu links)
+    window.addEventListener('hashchange', () => {
+      setTimeout(updateActiveMenuItem, 100);
+    });
+  })();
 </script>
 
 <style>
@@ -307,5 +375,51 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
       opacity: 1;
       transform: translateX(0);
     }
+  }
+  
+  /* Desktop menu items animation */
+  .desktop-menu-item {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+  }
+  
+  .desktop-menu-item:hover {
+    transform: translateY(-1px);
+  }
+  
+  .desktop-menu-item:active {
+    transform: translateY(0);
+  }
+  
+  .desktop-menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.2s ease-out, left 0.2s ease-out, background-color 0.2s ease-out;
+    transform: translateX(-50%);
+  }
+  
+  .desktop-menu-item:hover::after {
+    width: 80%;
+    background: hsl(var(--p)); /* Purple gradient color for hover */
+    height: 1px;
+  }
+  
+  .desktop-menu-item.active::after {
+    width: 80%;
+    background: currentColor;
+    height: 1px;
+  }
+  
+  .desktop-menu-item.active:hover::after {
+    background: hsl(var(--p)); /* Purple on hover even when active */
+  }
+  
+  .desktop-menu-item.active {
+    color: hsl(var(--bc));
   }
 </style>
