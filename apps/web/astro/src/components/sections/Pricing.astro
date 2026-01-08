@@ -184,120 +184,43 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
   
 </style>
 
-<script>
-  // Animate pricing cards on scroll with convergence/divergence and scaling
-  function animatePricingCards() {
-    const cardsContainer = document.getElementById('pricing-cards-container');
-    const cards = document.querySelectorAll('.pricing-card');
-    
-    if (!cardsContainer || cards.length === 0) {
-      console.log('Cards container or cards not found');
-      return;
-    }
-    
-    // Animate buttons only
-    let buttonsAnimated = false;
-    function animateButton(button) {
-      if (button && !button.dataset.animated) {
-        button.dataset.animated = 'true';
-        button.style.opacity = '0';
-        button.style.transform = 'translateY(20px)';
-        button.style.transition = 'opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s';
-        setTimeout(() => {
-          button.style.opacity = '1';
-          button.style.transform = 'translateY(0)';
-        }, 100);
-      }
-    }
-    
-    function updateCards() {
-      const containerRect = cardsContainer.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const viewportCenter = viewportHeight / 2;
-      const containerCenter = containerRect.top + containerRect.height / 2;
+<script is:inline>
+  (function() {
+    // Animate buttons only when cards become visible
+    function initButtonAnimation() {
+      const cards = document.querySelectorAll('.pricing-card');
+      const buttonsAnimated = new Set();
       
-      // Distance from viewport center
-      const distanceFromCenter = Math.abs(containerCenter - viewportCenter);
-      const maxDistance = viewportHeight * 0.8;
-      const progress = Math.max(0, Math.min(1, 1 - distanceFromCenter / maxDistance));
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const button = entry.target.querySelector('.pricing-button');
+              if (button && !buttonsAnimated.has(button)) {
+                buttonsAnimated.add(button);
+                button.style.opacity = '0';
+                button.style.transform = 'translateY(20px)';
+                button.style.transition = 'opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s';
+                setTimeout(() => {
+                  button.style.opacity = '1';
+                  button.style.transform = 'translateY(0)';
+                }, 100);
+              }
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
       
-      // Scale: from 0.7 to 1.0 based on progress
-      const scale = 0.7 + (progress * 0.3);
-      
-      cards.forEach((card, index) => {
-        // Horizontal movement: converge to center when visible, diverge when scrolled past
-        let translateX = 0;
-        if (containerCenter < viewportCenter - 100) {
-          // Scrolled past - diverge
-          const pastDistance = viewportCenter - containerCenter;
-          const pastProgress = Math.min(1, pastDistance / viewportHeight);
-          translateX = pastProgress * (index === 0 ? -80 : 80);
-        } else if (containerCenter > viewportCenter + 100) {
-          // Above viewport - start position
-          translateX = index === 0 ? -100 : 100;
-        } else {
-          // Approaching center - converge
-          const convergeProgress = 1 - progress;
-          translateX = convergeProgress * (index === 0 ? -100 : 100);
-        }
-        
-        card.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        card.style.opacity = progress > 0.2 ? '1' : '0.3';
-        card.style.transform = `scale(${scale}) translateX(${translateX}px)`;
-        
-        // Animate buttons when cards are fully visible
-        if (progress > 0.7 && !buttonsAnimated) {
-          buttonsAnimated = true;
-          const button = card.querySelector('.pricing-button');
-          animateButton(button);
-        }
+      cards.forEach((card) => {
+        observer.observe(card);
       });
     }
-    
-    // Initial state: cards start small and far apart
-    cards.forEach((card, index) => {
-      card.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-      card.style.opacity = '0';
-      card.style.transform = `scale(0.7) translateX(${index === 0 ? '-100px' : '100px'})`;
-    });
-    
-    // Update on scroll
-    let scrollTimeout = null;
-    function handleScroll() {
-      if (scrollTimeout) {
-        cancelAnimationFrame(scrollTimeout);
-      }
-      scrollTimeout = requestAnimationFrame(updateCards);
-    }
-    
-    // Listen to scroll
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Initial update
-    updateCards();
-    
-    // Also observe container for intersection
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            updateCards();
-          }
-        });
-      },
-      { 
-        threshold: [0, 0.1, 0.3, 0.5, 0.7, 0.9, 1],
-        rootMargin: '0px'
-      }
-    );
-    
-    observer.observe(cardsContainer);
-  }
 
-  // Run on page load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', animatePricingCards);
-  } else {
-    animatePricingCards();
-  }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initButtonAnimation);
+    } else {
+      initButtonAnimation();
+    }
+  })();
 </script>
