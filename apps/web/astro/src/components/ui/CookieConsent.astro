@@ -81,12 +81,16 @@
       }
     }
     
+    let bannerShown = false;
+    
     // Show banner if no consent or on cookies page
     function showBanner() {
-      const isCookiesPage = window.location.pathname === '/cookies';
+      if (bannerShown) return; // Prevent showing multiple times
+      
       if (!hasConsent() || isCookiesPage) {
         consentBanner.classList.remove('hidden');
         consentBanner.classList.add('animate-slide-up');
+        bannerShown = true;
       }
     }
     
@@ -96,11 +100,11 @@
       consentBanner.classList.remove('animate-slide-up');
       // Add slide-down animation
       consentBanner.classList.add('animate-slide-down');
-      // Hide after animation completes (0.15s)
+      // Hide after animation completes (0.3s)
       setTimeout(() => {
         consentBanner.classList.add('hidden');
         consentBanner.classList.remove('animate-slide-down');
-      }, 150);
+      }, 300);
     }
     
     // Handle accept all
@@ -171,11 +175,61 @@
       }
     });
     
-    // Show banner on page load
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', showBanner);
+    // Show banner logic based on page
+    if (isCookiesPage) {
+      // On cookies page, show immediately
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', showBanner);
+      } else {
+        showBanner();
+      }
     } else {
-      showBanner();
+      // On main page, show/hide when scrolling
+      let scrollTimeout = null;
+      let isAnimating = false;
+      
+      function handleScroll() {
+        // Debounce scroll events
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
+        
+        scrollTimeout = setTimeout(() => {
+          // If user already gave consent, don't show banner
+          if (hasConsent()) return;
+          
+          // Don't toggle if animation is in progress
+          if (isAnimating) return;
+          
+          // Show banner after scrolling at least 50% of viewport height
+          // Hide when scrolling back to 30% (hysteresis to prevent flickering)
+          const showThreshold = window.innerHeight * 0.5;
+          const hideThreshold = window.innerHeight * 0.3;
+          
+          if (window.scrollY > showThreshold && !bannerShown) {
+            isAnimating = true;
+            showBanner();
+            setTimeout(() => {
+              isAnimating = false;
+            }, 300);
+          } else if (window.scrollY <= hideThreshold && bannerShown) {
+            isAnimating = true;
+            hideBanner();
+            bannerShown = false; // Reset flag to allow showing again
+            setTimeout(() => {
+              isAnimating = false;
+            }, 300);
+          }
+        }, 50); // Debounce delay
+      }
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          window.addEventListener('scroll', handleScroll, { passive: true });
+        });
+      } else {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+      }
     }
     
     // On cookies page: reset consent if user leaves without making a choice
@@ -234,11 +288,11 @@
   }
   
   .animate-slide-up {
-    animation: slide-up 0.15s ease-out;
+    animation: slide-up 0.3s ease-in-out;
   }
   
   .animate-slide-down {
-    animation: slide-down 0.15s ease-out;
+    animation: slide-down 0.3s ease-in-out;
   }
 </style>
 
