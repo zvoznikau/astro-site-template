@@ -159,8 +159,8 @@ const faqJsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   </head>
 
-  <body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white antialiased bg-fixed">
-    <main class="relative">
+  <body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white antialiased bg-fixed overflow-x-hidden">
+    <main class="relative overflow-x-hidden">
       {
         blocksWithPauses.map((item) => {
           if (item.type === 'block' && item.name) {

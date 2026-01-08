@@ -14,7 +14,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
   class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32"
 >
           <!-- Background overlay to separate from main background -->
-          <div class="absolute inset-0 bg-gradient-to-br from-white/60 via-white/50 to-white/60 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8 backdrop-blur-sm pricing-bg-overlay"></div>
+          <div class="absolute top-0 bottom-0 bg-gradient-to-br from-white/60 via-white/50 to-white/60 rounded-3xl backdrop-blur-sm pricing-bg-overlay" style="left: calc(-1 * 1rem); right: calc(-1 * 1rem);"></div>
   <div class="relative z-10 space-y-20">
     <div class="text-center">
       <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
@@ -28,7 +28,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
     <!-- Two columns: Monthly | Yearly -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
       <!-- Monthly Plan -->
-      <div class="pricing-card p-8 rounded-2xl card-block backdrop-blur-md transition-all shadow-xl hover:scale-[1.02] hover:shadow-2xl">
+      <div class="pricing-card p-6 sm:p-8 rounded-2xl card-block backdrop-blur-md transition-all shadow-xl hover:scale-[1.02] hover:shadow-2xl">
         <div class="space-y-6">
           <div>
             <h3 class="text-2xl font-bold text-base-content mb-2 pricing-title">Monthly</h3>
@@ -40,7 +40,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
           <p class="text-base text-base-content/75 pricing-desc">Perfect for trying out DemoAPPmax.</p>
           <a
             href={brand.urls.appStore}
-            class="pricing-button inline-flex items-center justify-center w-full px-6 py-4 text-lg font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all shadow-lg hover:shadow-blue-500/40 hover:scale-[1.02]"
+            class="pricing-button inline-flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-lg font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all shadow-lg hover:shadow-blue-500/40 hover:scale-[1.02]"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -50,7 +50,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
       </div>
 
       <!-- Yearly Plan (highlighted - premium, attractive) -->
-      <div class="pricing-card pricing-card-featured p-8 rounded-2xl card-block backdrop-blur-md text-base-content relative overflow-hidden hover:scale-[1.02] transition-all group shadow-2xl hover:shadow-2xl">
+      <div class="pricing-card pricing-card-featured p-6 sm:p-8 rounded-2xl card-block backdrop-blur-md text-base-content relative overflow-hidden hover:scale-[1.02] transition-all group shadow-2xl hover:shadow-2xl">
         <!-- Animated pulsing glow -->
         <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-teal-500/15 to-cyan-500/15 animate-pulse-slow"></div>
         <!-- Shine effect -->
@@ -75,7 +75,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
           <p class="text-base text-base-content/75 pricing-desc">Save money with annual billing.</p>
           <a
             href={brand.urls.appStore}
-            class="pricing-button inline-flex items-center justify-center w-full px-6 py-4 text-lg font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg transition-all shadow-xl hover:shadow-emerald-500/50 hover:scale-[1.02]"
+            class="pricing-button inline-flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-lg font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg transition-all shadow-xl hover:shadow-emerald-500/50 hover:scale-[1.02]"
             target="_blank"
             rel="noopener noreferrer"
           >

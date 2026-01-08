@@ -6,9 +6,8 @@ import { brand } from '../../config/brand'
   <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- One line on desktop: Product name | Links | Copyright -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm text-base-content/60">
-      <div class="flex items-center gap-2">
+      <div class="flex flex-col md:flex-row md:items-center items-center gap-2">
         <span class="font-bold text-base-content">{brand.name}</span>
-        <span class="text-base-content/30">·</span>
         <span>© {new Date().getFullYear()}</span>
       </div>
       <div class="flex flex-wrap items-center justify-center gap-6">

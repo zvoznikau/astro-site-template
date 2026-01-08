@@ -10,14 +10,14 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
   <div class="relative z-10">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
     <!-- TEXT ZONE -->
-    <div class="space-y-6 sm:space-y-8 lg:space-y-10 order-2 lg:order-1">
+    <div class="space-y-6 sm:space-y-8 lg:space-y-10 order-2 lg:order-1 text-center sm:text-left">
       <h1 class="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] tracking-tight">
         <span class="gradient-text">{brand.product.valueProposition.split('.')[0]}.</span>
         <span class="text-base-content block mt-2">
           {brand.product.valueProposition.split('.').slice(1).join('.')}
         </span>
       </h1>
-      <p class="text-lg sm:text-xl lg:text-3xl text-base-content/80 leading-relaxed max-w-2xl">
+      <p class="text-lg sm:text-xl lg:text-3xl text-base-content/80 leading-relaxed max-w-2xl mx-auto sm:mx-0">
         {brand.product.secondaryLine}
       </p>
       <div class="pt-4 sm:pt-6 flex flex-col items-center sm:flex-row sm:items-start gap-3 sm:gap-4">
