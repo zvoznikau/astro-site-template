@@ -59,7 +59,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
 <!-- Mobile menu - outside header to blur content properly -->
 <div id="mobile-menu" class="lg:hidden fixed inset-0 z-[10000] hidden">
   <!-- Overlay - blurs content below header, not the header itself -->
-  <div id="menu-overlay" class="absolute top-[72px] left-0 right-0 bottom-0 bg-black/50 z-[1]"></div>
+  <div id="menu-overlay" class="absolute top-[72px] left-0 right-0 bottom-0 bg-black/70 z-[1]"></div>
     
     <!-- Menu panel - above everything including header -->
     <div id="menu-panel" class="absolute top-0 right-0 h-full w-80 shadow-2xl flex flex-col z-[10001]" style="background-color: hsl(var(--b1) / 0.95);">
@@ -269,6 +269,22 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
       }
     }
     
+    function updateHeaderOpacity(scrollY) {
+      if (scrollY === 0) {
+        // At top - fully transparent
+        header.style.setProperty('background-color', 'hsl(var(--b1) / 0)', 'important');
+      } else if (scrollY < threshold) {
+        // Fade in opacity as we scroll, synchronized with shadow
+        const opacity = scrollY / threshold;
+        // Opacity goes from 0 to 0.97 (97% at threshold)
+        const bgOpacity = opacity * 0.97;
+        header.style.setProperty('background-color', `hsl(var(--b1) / ${bgOpacity})`, 'important');
+      } else {
+        // When scrolled past threshold - 97% opacity
+        header.style.setProperty('background-color', 'hsl(var(--b1) / 0.97)', 'important');
+      }
+    }
+    
     function updateActiveMenuItem(scrollY) {
       if (sections.length === 0) return;
       
@@ -311,6 +327,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
           // Only update if scroll position changed significantly (performance optimization)
           if (Math.abs(scrollY - lastScrollY) > 5) {
             updateHeaderShadow(scrollY);
+            updateHeaderOpacity(scrollY);
             updateActiveMenuItem(scrollY);
             lastScrollY = scrollY;
           }
@@ -323,6 +340,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
     
     // Initial check
     updateHeaderShadow(window.scrollY);
+    updateHeaderOpacity(window.scrollY);
     updateActiveMenuItem(window.scrollY);
     
     // Single scroll listener with throttling
