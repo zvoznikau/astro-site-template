@@ -12,16 +12,22 @@ import { brand } from '../../config/brand'
       </div>
       <div class="flex flex-wrap items-center justify-center gap-6">
         <a
-          href={brand.urls.privacy}
+          href="/privacy"
           class="hover:text-base-content transition-colors font-medium"
         >
           Privacy
         </a>
         <a
-          href={brand.urls.terms}
+          href="/terms"
           class="hover:text-base-content transition-colors font-medium"
         >
           Terms
+        </a>
+        <a
+          href="/cookies"
+          class="hover:text-base-content transition-colors font-medium"
+        >
+          Cookies
         </a>
         <a
           href={`mailto:${brand.contact.support}`}
