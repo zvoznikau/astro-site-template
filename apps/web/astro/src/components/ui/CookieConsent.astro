@@ -90,10 +90,17 @@
       }
     }
     
-    // Hide banner
+    // Hide banner with slide-down animation
     function hideBanner() {
-      consentBanner.classList.add('hidden');
+      // Remove slide-up animation if present
       consentBanner.classList.remove('animate-slide-up');
+      // Add slide-down animation
+      consentBanner.classList.add('animate-slide-down');
+      // Hide after animation completes (0.15s)
+      setTimeout(() => {
+        consentBanner.classList.add('hidden');
+        consentBanner.classList.remove('animate-slide-down');
+      }, 150);
     }
     
     // Handle accept all
@@ -117,7 +124,7 @@
           acceptAllBtn.textContent = 'Accept All';
           acceptAllBtn.disabled = false;
           acceptAllBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-        }, 500);
+        }, 250);
       } else {
         hideBanner();
       }
@@ -151,7 +158,7 @@
           acceptEssentialBtn.textContent = 'Essential Only';
           acceptEssentialBtn.disabled = false;
           acceptEssentialBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-        }, 500);
+        }, 250);
       } else {
         hideBanner();
       }
@@ -215,8 +222,23 @@
     }
   }
   
+  @keyframes slide-down {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+  
   .animate-slide-up {
     animation: slide-up 0.15s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slide-down 0.15s ease-out;
   }
 </style>
 
