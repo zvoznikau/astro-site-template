@@ -39,7 +39,27 @@ import { brand } from '../../config/brand'
         </div>
       </div>
       
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 lg:gap-12 relative">
+        <!-- Connecting line on mobile - vertical from middle of first card to middle of third card -->
+        <div class="md:hidden absolute left-1/2 -translate-x-1/2 w-1.5 bg-gradient-to-b from-purple-400/70 via-purple-500/90 to-purple-400/70 rounded-full connecting-line-mobile overflow-visible z-0" style="top: 80px; bottom: 80px;">
+          <!-- Animated spark/charge moving along the line -->
+          <div class="spark-dot-mobile"></div>
+          <!-- Explosion effect at the end -->
+          <div class="explosion-mobile">
+            <div class="explosion-particle-mobile particle-mobile-1"></div>
+            <div class="explosion-particle-mobile particle-mobile-2"></div>
+            <div class="explosion-particle-mobile particle-mobile-3"></div>
+            <div class="explosion-particle-mobile particle-mobile-4"></div>
+            <div class="explosion-particle-mobile particle-mobile-5"></div>
+            <div class="explosion-particle-mobile particle-mobile-6"></div>
+            <div class="explosion-particle-mobile particle-mobile-7"></div>
+            <div class="explosion-particle-mobile particle-mobile-8"></div>
+            <div class="explosion-particle-mobile particle-mobile-9"></div>
+            <div class="explosion-particle-mobile particle-mobile-10"></div>
+            <div class="explosion-particle-mobile particle-mobile-11"></div>
+            <div class="explosion-particle-mobile particle-mobile-12"></div>
+          </div>
+        </div>
         {brand.howItWorks.map((step, index) => (
           <div class="flex flex-col h-full relative">
             <!-- Large number background -->
@@ -397,6 +417,311 @@ import { brand } from '../../config/brand'
   
   .particle-12 {
     animation: particle-explode-12 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  /* Mobile vertical line animations */
+  @keyframes spark-move-mobile {
+    0% {
+      top: 0%;
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+      top: calc(100% - 6px);
+    }
+    95% {
+      opacity: 1;
+      top: calc(100% - 6px);
+    }
+    100% {
+      top: calc(100% - 6px);
+      opacity: 0;
+    }
+  }
+  
+  .connecting-line-mobile {
+    position: absolute;
+    z-index: 0;
+  }
+  
+  .spark-dot-mobile {
+    z-index: 5;
+  }
+  
+  .explosion-mobile {
+    z-index: 5;
+  }
+  
+  .explosion-particle-mobile {
+    z-index: 5;
+  }
+  
+  .spark-dot-mobile {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, rgba(196, 181, 253, 1), rgba(168, 85, 247, 1));
+    border-radius: 50%;
+    z-index: 20;
+    animation: spark-move-mobile 3s ease-in-out infinite, spark-glow 3s ease-in-out infinite, spark-color 3s ease-in-out infinite;
+  }
+  
+  .explosion-mobile {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    z-index: 20;
+    animation: explosion 3s ease-in-out infinite;
+  }
+  
+  .explosion-particle-mobile {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(196, 181, 253, 1), rgba(168, 85, 247, 1));
+    border-radius: 50%;
+    box-shadow: 0 0 16px rgba(168, 85, 247, 1), 0 0 32px rgba(196, 181, 253, 0.8), 0 0 48px rgba(168, 85, 247, 0.6);
+    filter: blur(1px);
+    top: 0;
+    left: 0;
+    z-index: 30;
+  }
+  
+  @keyframes particle-explode-mobile-1 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(30px, 48px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-2 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-30px, 48px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-3 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(48px, 36px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-4 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-48px, 36px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-5 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(0, 60px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-6 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(0, -30px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-7 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(25px, 42px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-8 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-25px, 42px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-9 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(42px, 25px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-10 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-42px, 25px) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-11 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(36px, 0) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes particle-explode-mobile-12 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-36px, 0) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  .particle-mobile-1 {
+    animation: particle-explode-mobile-1 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-2 {
+    animation: particle-explode-mobile-2 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-3 {
+    animation: particle-explode-mobile-3 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-4 {
+    animation: particle-explode-mobile-4 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-5 {
+    animation: particle-explode-mobile-5 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-6 {
+    animation: particle-explode-mobile-6 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-7 {
+    animation: particle-explode-mobile-7 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-8 {
+    animation: particle-explode-mobile-8 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-9 {
+    animation: particle-explode-mobile-9 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-10 {
+    animation: particle-explode-mobile-10 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-11 {
+    animation: particle-explode-mobile-11 0.5s ease-out infinite;
+    animation-delay: 2.79s;
+  }
+  
+  .particle-mobile-12 {
+    animation: particle-explode-mobile-12 0.5s ease-out infinite;
     animation-delay: 2.79s;
   }
 </style>
