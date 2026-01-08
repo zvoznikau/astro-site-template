@@ -4,7 +4,7 @@ import ThemeToggle from '../ui/ThemeToggle.astro'
 import AppStoreBadge from '../ui/AppStoreBadge.astro'
 ---
 
-<header class="sticky top-0 z-[101] bg-transparent backdrop-blur-md border-b border-white/10">
+<header id="main-header" class="fixed top-0 left-0 right-0 z-[9999] bg-base-100/80 backdrop-blur-md">
   <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
     <div class="flex items-center justify-between">
       <!-- Logo -->
@@ -208,6 +208,36 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
       if (!isOpen) initMenu();
     });
   })();
+  
+  // Header shadow on scroll with smooth transition near top
+  (function() {
+    const header = document.getElementById('main-header');
+    if (!header) return;
+    
+    const threshold = window.innerHeight; // Distance from top where shadow starts fading (1 viewport height)
+    
+    function updateHeaderShadow() {
+      const scrollY = window.scrollY;
+      
+      if (scrollY === 0) {
+        header.style.boxShadow = 'none';
+      } else if (scrollY < threshold) {
+        // Fade shadow as we approach top
+        const opacity = scrollY / threshold;
+        const shadowIntensity = opacity * 0.25; // Adjust shadow strength
+        header.style.boxShadow = `0 10px 15px -3px rgba(0, 0, 0, ${shadowIntensity}), 0 4px 6px -2px rgba(0, 0, 0, ${shadowIntensity * 0.5})`;
+      } else {
+        // Full shadow when scrolled past threshold
+        header.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+      }
+    }
+    
+    // Initial check
+    updateHeaderShadow();
+    
+    // Update on scroll
+    window.addEventListener('scroll', updateHeaderShadow, { passive: true });
+  })();
 </script>
 
 <style>
@@ -238,5 +268,9 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
   
   #menu-overlay {
     opacity: 0;
+  }
+  
+  #main-header {
+    transition: box-shadow 0.3s ease-in-out;
   }
 </style>

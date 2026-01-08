@@ -47,6 +47,7 @@ html[data-theme='light'] {
 body {
   min-height: 100vh;
   background: transparent;
+  padding-top: 72px; /* Offset for fixed header */
 }
 
 /* DaisyUI theme variables for light theme (Astro.build style) */
