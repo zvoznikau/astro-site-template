@@ -28,8 +28,8 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
     <!-- Two columns: Monthly | Yearly -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
       <!-- Monthly Plan -->
-      <div class="pricing-card p-6 sm:p-8 rounded-2xl card-block backdrop-blur-md transition-all shadow-xl hover:scale-[1.02] hover:shadow-2xl">
-        <div class="space-y-6">
+      <div class="pricing-card p-6 sm:p-8 rounded-2xl card-block backdrop-blur-md transition-all shadow-xl hover:scale-[1.02] hover:shadow-2xl flex flex-col">
+        <div class="space-y-6 flex-grow flex flex-col">
           <div>
             <h3 class="text-2xl font-bold text-base-content mb-2 pricing-title">Monthly</h3>
             <div class="flex items-baseline gap-2 pricing-price">
@@ -40,7 +40,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
           <p class="text-base text-base-content/75 pricing-desc">Perfect for trying out DemoAPPmax.</p>
           <a
             href={brand.urls.appStore}
-            class="pricing-button inline-flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-lg font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all shadow-lg hover:shadow-blue-500/40 hover:scale-[1.02]"
+            class="pricing-button inline-flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-lg font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-all duration-200 shadow-lg hover:shadow-blue-500/10 hover:-translate-y-0.5 active:translate-y-0 mt-auto"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -50,15 +50,15 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
       </div>
 
       <!-- Yearly Plan (highlighted - premium, attractive) -->
-      <div class="pricing-card pricing-card-featured p-6 sm:p-8 rounded-2xl card-block backdrop-blur-md text-base-content relative overflow-hidden hover:scale-[1.02] transition-all group shadow-2xl hover:shadow-2xl">
+      <div class="pricing-card pricing-card-featured p-6 sm:p-8 rounded-2xl card-block backdrop-blur-md text-base-content relative overflow-hidden hover:scale-[1.02] transition-all group shadow-2xl hover:shadow-2xl flex flex-col">
         <!-- Animated pulsing glow -->
         <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-teal-500/15 to-cyan-500/15 animate-pulse-slow"></div>
         <!-- Shine effect -->
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-base-content/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-base-content/1 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
         <div class="absolute top-4 right-4">
           <span class="px-3 py-1 text-xs font-bold rounded-full backdrop-blur-sm animate-bounce-subtle shadow-md best-value-badge">Best value</span>
         </div>
-        <div class="space-y-6 relative z-10">
+        <div class="space-y-6 relative z-10 flex-grow flex flex-col">
           <div>
             <h3 class="text-2xl font-bold mb-2 pricing-title text-base-content">Yearly</h3>
             <div class="space-y-2 pricing-price">
@@ -75,7 +75,7 @@ const monthlyYearlyFormatted = `$${monthlyYearlyTotal.toFixed(2)}/year`
           <p class="text-base text-base-content/75 pricing-desc">Save money with annual billing.</p>
           <a
             href={brand.urls.appStore}
-            class="pricing-button inline-flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-lg font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg transition-all shadow-xl hover:shadow-emerald-500/50 hover:scale-[1.02]"
+            class="pricing-button inline-flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-lg font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg transition-all duration-200 shadow-xl hover:shadow-emerald-500/12 hover:-translate-y-0.5 active:translate-y-0 mt-auto"
             target="_blank"
             rel="noopener noreferrer"
           >
