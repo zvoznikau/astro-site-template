@@ -102,13 +102,14 @@ const blogJsonLd = {
                   </p>
                   
                   <!-- Read more -->
-                  <div class="flex items-center text-primary font-medium group-hover:gap-2 transition-all">
-                    <span>Read more</span>
+                  <div class="flex items-center font-medium group-hover:gap-2 transition-all read-more-link" data-read-more>
+                    <span data-read-more-text>Read more</span>
                     <svg
                       class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      data-read-more-svg
                     >
                       <path
                         stroke-linecap="round"
@@ -129,4 +130,47 @@ const blogJsonLd = {
     <Footer />
   </body>
 </html>
+
+<script>
+  // Force white color for Read more links in light theme
+  function updateReadMoreColors() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light'
+    const readMoreElements = document.querySelectorAll('[data-read-more]')
+    
+    readMoreElements.forEach((el) => {
+      const text = el.querySelector('[data-read-more-text]')
+      const svg = el.querySelector('[data-read-more-svg]')
+      
+      if (isLight) {
+        el.style.color = '#ffffff'
+        if (text) text.style.color = '#ffffff'
+        if (svg) {
+          svg.style.color = '#ffffff'
+          svg.style.stroke = '#ffffff'
+        }
+      } else {
+        el.style.color = ''
+        if (text) text.style.color = ''
+        if (svg) {
+          svg.style.color = ''
+          svg.style.stroke = ''
+        }
+      }
+    })
+  }
+  
+  // Run on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateReadMoreColors)
+  } else {
+    updateReadMoreColors()
+  }
+  
+  // Watch for theme changes
+  const observer = new MutationObserver(updateReadMoreColors)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  })
+</script>
 

@@ -30,9 +30,6 @@ export const blogPosts: BlogPost[] = [
     description: 'We are excited to announce the launch of DemoAPPmax - a new server monitoring application',
     date: '2024-01-15',
     excerpt: 'Today we are proud to introduce DemoAPPmax - a revolutionary server monitoring application that helps you track your infrastructure performance in real-time.',
-    author: {
-      name: 'Vadzim Zvoznikau',
-    },
     content: `
 <h2>What is DemoAPPmax?</h2>
 <p>DemoAPPmax is a modern iOS application designed for system administrators, DevOps engineers, and anyone who cares about their server stability. Our application allows you to:</p>

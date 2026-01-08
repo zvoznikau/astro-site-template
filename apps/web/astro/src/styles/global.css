@@ -144,6 +144,37 @@ body {
   color: hsl(var(--bc) / 0.3);
 }
 
+/* Read more link colors - dark theme uses primary color */
+[data-theme='dark'] .read-more-link,
+html:not([data-theme]) .read-more-link {
+  color: hsl(var(--p));
+}
+
+[data-theme='dark'] .read-more-link span,
+html:not([data-theme]) .read-more-link span {
+  color: hsl(var(--p));
+}
+
+[data-theme='dark'] .read-more-link svg,
+html:not([data-theme]) .read-more-link svg {
+  color: hsl(var(--p));
+  stroke: hsl(var(--p));
+}
+
+/* Force white color in light theme - maximum specificity */
+html[data-theme='light'] .read-more-link,
+html[data-theme='light'] .read-more-link span,
+html[data-theme='light'] .read-more-link svg,
+html[data-theme='light'] .read-more-link * {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .read-more-link svg,
+html[data-theme='light'] .read-more-link svg path {
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+
 /* DaisyUI theme variables for dark theme */
 [data-theme='dark'] {
   --p: 262 80% 80%; /* Lighter purple */
