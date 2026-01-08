@@ -71,7 +71,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
       <nav class="flex-1 overflow-y-auto min-h-0 px-4 py-4">
         <ul class="space-y-0.5">
           <!-- Home link -->
-          <li>
+          <li class="menu-item">
             <a
               href="/"
               class="block text-3xl font-medium text-base-content/70 hover:text-base-content py-4 px-5 rounded-xl hover:bg-base-content/10 transition-colors w-full"
@@ -80,8 +80,8 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
             </a>
           </li>
           
-          {brand.navigation.items.map((item) => (
-            <li>
+          {brand.navigation.items.map((item, index) => (
+            <li class="menu-item" style={`animation-delay: ${(index + 1) * 50}ms;`}>
               <a
                 href={item.href}
                 class="block text-3xl font-medium text-base-content/70 hover:text-base-content py-4 px-5 rounded-xl hover:bg-base-content/10 transition-colors w-full"
@@ -94,7 +94,7 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
           ))}
           
           <!-- App Store badge as menu item -->
-          <li class="pt-2 mt-2">
+          <li class="menu-item pt-2 mt-2" style={`animation-delay: ${(brand.navigation.items.length + 1) * 50}ms;`}>
             <div class="py-2 px-1">
               <AppStoreBadge href={brand.urls.appStore} size="sm" />
             </div>
@@ -135,23 +135,45 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
       menuIcon.classList.add('hidden');
       closeIcon.classList.remove('hidden');
       
-      // Show menu immediately (no animation)
-      menuPanel.style.transform = 'translateX(0)';
-      menuOverlay.style.opacity = '1';
+      // Trigger smooth animations
+      requestAnimationFrame(() => {
+        menuPanel.style.transform = 'translateX(0)';
+        menuOverlay.style.opacity = '1';
+      });
+      
+      // Reset and trigger menu items animation with delay
+      setTimeout(() => {
+        const menuItems = mobileMenu.querySelectorAll('.menu-item');
+        menuItems.forEach((item, index) => {
+          item.style.animation = 'none';
+          // Force reflow
+          void item.offsetWidth;
+          item.style.animation = `menu-item-fade-in 0.3s ease-out ${index * 50}ms forwards`;
+        });
+      }, 100);
     }
     
     function closeMenu() {
       if (!isOpen) return;
       isOpen = false;
       
-      // Hide menu immediately (no animation)
+      // Smooth close animation
       menuPanel.style.transform = 'translateX(100%)';
       menuOverlay.style.opacity = '0';
-      mobileMenu.classList.add('hidden');
       
-      document.body.style.overflow = '';
-      menuIcon.classList.remove('hidden');
-      closeIcon.classList.add('hidden');
+      // Reset menu items animation
+      const menuItems = mobileMenu.querySelectorAll('.menu-item');
+      menuItems.forEach(item => {
+        item.style.animation = 'none';
+      });
+      
+      // Hide menu after animation
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+        document.body.style.overflow = '';
+        menuIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      }, 300);
     }
     
     menuBtn.addEventListener('click', () => {
@@ -260,14 +282,30 @@ import AppStoreBadge from '../ui/AppStoreBadge.astro'
     width: 20rem;
     max-height: 100vh;
     z-index: 10001 !important;
+    transition: transform 0.3s ease-out;
   }
   
   #menu-overlay {
     z-index: 1 !important;
     opacity: 0;
+    transition: opacity 0.3s ease-out, backdrop-filter 0.3s ease-out;
   }
   
   #main-header {
     transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  /* Menu items animation */
+  .menu-item {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: menu-item-fade-in 0.3s ease-out forwards;
+  }
+  
+  @keyframes menu-item-fade-in {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 </style>
