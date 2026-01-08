@@ -42,12 +42,24 @@
     
     if (!consentBanner || !acceptAllBtn || !acceptEssentialBtn) return;
     
+    const isCookiesPage = window.location.pathname === '/cookies';
+    let choiceMadeOnCookiesPage = false;
+    
     // Check if user has already given consent
     function hasConsent() {
       try {
         return localStorage.getItem(COOKIE_CONSENT_KEY) !== null;
       } catch (e) {
         return false;
+      }
+    }
+    
+    // Clear consent
+    function clearConsent() {
+      try {
+        localStorage.removeItem(COOKIE_CONSENT_KEY);
+      } catch (e) {
+        console.error('Failed to clear cookie consent:', e);
       }
     }
     
@@ -61,14 +73,18 @@
           expiry: new Date(Date.now() + COOKIE_CONSENT_EXPIRY_DAYS * 24 * 60 * 60 * 1000).toISOString()
         };
         localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(consentData));
+        if (isCookiesPage) {
+          choiceMadeOnCookiesPage = true;
+        }
       } catch (e) {
         console.error('Failed to save cookie consent:', e);
       }
     }
     
-    // Show banner if no consent
+    // Show banner if no consent or on cookies page
     function showBanner() {
-      if (!hasConsent()) {
+      const isCookiesPage = window.location.pathname === '/cookies';
+      if (!hasConsent() || isCookiesPage) {
         consentBanner.classList.remove('hidden');
         consentBanner.classList.add('animate-slide-up');
       }
@@ -81,9 +97,31 @@
     }
     
     // Handle accept all
-    acceptAllBtn.addEventListener('click', () => {
+    acceptAllBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (isCookiesPage) {
+        choiceMadeOnCookiesPage = true;
+      }
       saveConsent(true);
-      hideBanner();
+      
+      // Show feedback and hide banner
+      if (isCookiesPage) {
+        acceptAllBtn.textContent = '✓ Saved';
+        acceptAllBtn.disabled = true;
+        acceptAllBtn.classList.add('opacity-75', 'cursor-not-allowed');
+        // Hide banner after showing feedback
+        setTimeout(() => {
+          hideBanner();
+          acceptAllBtn.textContent = 'Accept All';
+          acceptAllBtn.disabled = false;
+          acceptAllBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        }, 1500);
+      } else {
+        hideBanner();
+      }
+      
       // Initialize analytics if needed
       if (typeof gtag !== 'undefined') {
         gtag('consent', 'update', {
@@ -93,9 +131,31 @@
     });
     
     // Handle accept essential only
-    acceptEssentialBtn.addEventListener('click', () => {
+    acceptEssentialBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (isCookiesPage) {
+        choiceMadeOnCookiesPage = true;
+      }
       saveConsent(false);
-      hideBanner();
+      
+      // Show feedback and hide banner
+      if (isCookiesPage) {
+        acceptEssentialBtn.textContent = '✓ Saved';
+        acceptEssentialBtn.disabled = true;
+        acceptEssentialBtn.classList.add('opacity-75', 'cursor-not-allowed');
+        // Hide banner after showing feedback
+        setTimeout(() => {
+          hideBanner();
+          acceptEssentialBtn.textContent = 'Essential Only';
+          acceptEssentialBtn.disabled = false;
+          acceptEssentialBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+        }, 1500);
+      } else {
+        hideBanner();
+      }
+      
       // Disable analytics if needed
       if (typeof gtag !== 'undefined') {
         gtag('consent', 'update', {
@@ -109,6 +169,36 @@
       document.addEventListener('DOMContentLoaded', showBanner);
     } else {
       showBanner();
+    }
+    
+    // On cookies page: reset consent if user leaves without making a choice
+    if (isCookiesPage) {
+      // Reset consent when leaving cookies page without making a choice
+      window.addEventListener('beforeunload', () => {
+        if (!choiceMadeOnCookiesPage) {
+          clearConsent();
+        }
+      });
+      
+      // Also handle navigation within the site
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (link && link.href && !link.href.includes('#') && link.href !== window.location.href) {
+          // Small delay to allow choice to be made
+          setTimeout(() => {
+            if (!choiceMadeOnCookiesPage) {
+              clearConsent();
+            }
+          }, 100);
+        }
+      });
+      
+      // Handle browser back/forward
+      window.addEventListener('popstate', () => {
+        if (!choiceMadeOnCookiesPage) {
+          clearConsent();
+        }
+      });
     }
   })();
 </script>
